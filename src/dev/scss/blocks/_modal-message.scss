@@ -1,0 +1,112 @@
+
+
+.modal-message
+{
+
+    &--success
+    {
+        background-color: #3a86ff;
+    }
+
+    &--error
+    {
+        background-color: #e63946;
+    }
+
+    width: 90%;
+    min-height: 100px;
+    color: #fff;
+    border-radius: .5rem;
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 100%;
+    top: 3%;
+    transform: translate(calc(-100% + -10px), -3%) scale(1);
+    overflow: hidden;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    animation: show 3s linear forwards, hide 1.4s 3s  linear forwards;
+    
+    @keyframes show {
+        0%
+        {
+            opacity: 0;
+        }
+        30%,50%,100%
+        {
+            opacity: 1;
+        }
+    }
+    @keyframes hide {
+        to
+        {
+            opacity: 0;
+        }
+    }
+
+    &__title
+    {
+        width: 90%;
+        margin-bottom: .3rem;
+        flex: 1;
+        border-bottom: 1px solid #fff;
+        text-align: center;
+    }
+    &__message
+    {
+        flex: .5;
+        margin-left: 5px;
+
+        text-transform: capitalize;
+
+        &:last-child
+        {
+            padding-bottom: 0;
+        }
+
+        &::before
+        {
+            content: '\25CF';
+            color: #FFF;
+            font-size: 16px;
+        }
+    }
+  
+
+    &::after
+    {
+        content: '';
+        border-radius: inherit;
+        width: 100%;
+        height: 2px;
+        position: absolute;
+        bottom: 0;
+        background-color: red;
+        transform: scale(0,1);
+        transform-origin: left;
+        animation: bar 3s  linear;
+
+        @keyframes bar {
+            to {
+                transform: scale(1);
+            }
+        }
+    }
+
+    &--error::after
+    {
+        background-color: #fff;
+    }
+
+    @include tablet 
+    {
+        & 
+        {
+            width: 300px;
+            min-height: 100px;
+        }
+    }
+
+}

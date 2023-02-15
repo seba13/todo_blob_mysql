@@ -1,0 +1,115 @@
+extends ../templates/template
+
+
+
+block to-do
+    .container-tasks
+        .task__input-insert
+            iconify-icon(icon="material-symbols:add-circle-rounded")
+            button.new-task#new-task INGRESE NUEVA TAREA...
+
+            form.task__form-insert.task__form-insert--hidden
+                .task__form__close
+                    iconify-icon(icon="material-symbols:close")
+                .task__form__wrapper
+                    //- label(for="title-task") Title Task:
+                    input(type="text" id="title-task" placeholder="Title Task" required) 
+                .task__form__wrapper
+                    //- label(for="description-task") Description Task:
+                    input(type="text" id="description-task" placeholder="Description Task" required) 
+                .task__form__wrapper
+                    input(type="submit", value="Agregar tarea")
+        .task__wrapper
+            .task-list#task-list
+                - tasks.sort((a,b) => a.order_task - b.order_task)
+                each task in tasks
+                    .task-list__wrapper(data-id=task.id_task)
+                        .task-list__element
+                            input(type="text" name="nombre" value=task.nombre readonly).task-list__title
+                            input(type="text" name="descripcion" value=task.descripcion readonly).task-list__description
+                        .task-list__element
+                            .task-list__options
+                                iconify-icon.move-task(icon="mdi:cursor-move")
+                                iconify-icon(icon="fluent:options-20-filled")
+                                .task-list__options__btn.task-list__options__btn--hidden
+                                    .task-list__icon--close
+                                        iconify-icon.btn__close-options(icon="material-symbols:close")
+                                    .task-list__icon
+                                        iconify-icon(icon="material-symbols:edit-document")
+                                        span Editar
+                                    .task-list__icon.task-list__icon--hidden
+                                        iconify-icon(icon="material-symbols:save-as")
+                                        span Guardar
+                                    .task-list__icon
+                                        .checkbox-wrapper
+                                            input(type="checkbox", id=task.id_task name="estado" checked=task.estado? true: false value="done") 
+                                            label(for=task.id_task) 
+                                                span.circle
+                                            span= task.estado? 'Realizada' : 'Pendiente'
+                                        
+                                    .task-list__icon
+                                        iconify-icon(icon="material-symbols:delete-forever-rounded")
+                                        span Eliminar
+
+
+
+
+
+
+
+
+
+                //- .task-list__wrapper
+                //-     .task-list__element
+                //-         input(type="text" name="nombre" value="Estudiar nueva Tecnologia" readonly).task-list__title 
+                //-         input(type="text" name="descripcion" value="estudiar tecnologia de json web token" readonly).task-list__description 
+                //-     .task-list__element
+                //-         .task-list__options
+                //-             iconify-icon(icon="fluent:options-20-filled")
+                //-             .task-list__options__btn.task-list__options__btn--hidden
+                //-                 .task-list__icon--close
+                //-                     iconify-icon.btn__close-options(icon="material-symbols:close")
+                //-                 .task-list__icon
+                //-                     iconify-icon(icon="material-symbols:edit-document")
+                //-                     span Editar
+                //-                 .task-list__icon.task-list__icon--hidden
+                //-                     iconify-icon(icon="material-symbols:save-as")
+                //-                     span Guardar
+                //-                 .task-list__icon
+                //-                     .checkbox-wrapper
+                //-                         input#checkbox(type="checkbox", name="estado" checked value="done") 
+                //-                         label(for="checkbox") 
+                //-                             span.circle
+                //-                         span Realizado
+                                    
+                //-                 .task-list__icon
+                //-                     iconify-icon(icon="material-symbols:delete-forever-rounded")
+                //-                     span Eliminar
+               
+
+
+
+
+
+            .task-dock#task-dock
+                //- span.task-dock__circle
+                //- span.task-dock__circle.task-dock__circle--active
+                //- span.task-dock__circle
+                //- span.task-dock__circle
+
+            .task-info
+                .task-info__title
+                    span#tasks-length Tasks
+                .task-info__done
+                    span Realizadas: 
+                    span#tasks-done
+                .task-info__pending
+                    span Pendientes: 
+                    span#tasks-pending    
+        .task-buttons
+            .button-left#button-left
+                iconify-icon(icon="material-symbols:chevron-left")
+            .button-right#button-right
+                iconify-icon(icon="material-symbols:chevron-right")
+    script(src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js")
+    script(src="./js/tasks.js") 

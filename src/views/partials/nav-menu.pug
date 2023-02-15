@@ -1,0 +1,35 @@
+
+include ../config/links.pug
+
+
+.wrapper-nav
+    .topbar
+        
+        ul.topbar__menu
+            li.topbar__menu__item: span.hamburger#hamburger
+                span 
+                span
+                span
+            li.topbar__menu__item: a.logo(href="#"): img(src="./img/fox.svg" alt="img logo")
+
+        nav.nav.nav--hidden#nav
+            ul.nav-menu
+                each link in mainLinks
+                    -tag = link.icon.tag
+                    -flag = selected == link.selected
+                    li.nav-menu__item: a(href=link.url class=link.icon.class ) 
+                        #{link.icon.tag}(icon=link.icon.icon) 
+                        span #{link.name}
+                
+            //- link.name
+            ul.nav-menu
+                if(!user)
+                    each link in linksUser
+                        li.nav-menu__item: a(href=link.url )
+                            #{link.icon.tag}(icon=link.icon.icon) 
+                            span #{link.name}  
+                else 
+                    each link in logout
+                        li.nav-menu__item: a(href=link.url)
+                            #{link.icon.tag}(icon=link.icon.icon) 
+                            span #{link.name}

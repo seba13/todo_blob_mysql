@@ -1,0 +1,131 @@
+
+
+
+  input::placeholder {
+
+    font-size: 1rem;
+    font-weight: regular;
+    color: #F2B02E;
+}
+
+
+.login-form
+{
+    margin: 50px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    width: 90%;
+    min-width: 320px;
+    max-width: 400px;;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 50%;
+    // top: 50%;
+    transform: translate(-50%);
+    background-color: #EBEAEF;
+    
+    &:hover &__user-icon
+    {
+        transform: translate(-50%,-50%) scale(1.2);
+    }
+
+    &__user-icon
+    {
+        top: 0;
+        left: 50%;
+        border-radius: 50%;
+        background-color: #383838;
+        color: $color-link-orange;
+        transform: translate(-50%,-50%) scale(1);
+        position: absolute;
+        font-size: 4rem;
+        transition: transform .5s ease;
+    }
+
+    &__wrapper
+    {
+        padding: 1rem 1rem;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        
+        &:nth-child(2)
+        {
+            margin-top: 59px;
+            margin-bottom: 10px;
+            padding-top: 0;
+            // padding-top: 47px;
+            // margin-top: 2rem;
+        }
+        &:last-child
+        {
+            margin-bottom: 29px;
+        }
+    }
+
+    &__title
+    {
+        margin: 0;
+        align-self: center;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #182D3E;
+    }
+
+    &__label
+    {
+        padding-left: .5rem;
+        font-weight: bold;
+        color: #FF5400;
+        font-size: 20px;
+    }
+
+    &__input 
+    {
+        // max-width: 100%;
+        color: #182D3E;
+        width: 90%;
+        border: none;
+        background-color: transparent;
+        border-bottom: 1px solid #FF5400;
+
+        // border-radius: .4rem;
+        outline: none;
+        padding: .5rem .5rem;
+
+
+        &--doble 
+        {
+            width: 40%;
+        }
+
+        &--submit
+        {
+            border: none;
+            cursor: pointer;
+            padding: 26px 51px;
+            align-self: center;
+            width: auto;
+            font-size: 25px;
+            font-weight: bold;
+            border-radius: 30px;
+            color: #fff;
+            background-color: #0077B6;
+        }
+
+    }
+
+    @include tablet
+    {
+
+    }
+    @include laptop {
+        width: 400px;
+    }
+}

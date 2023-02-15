@@ -1,0 +1,17 @@
+
+
+@import './mixins/breakpoints';
+@import './config//colors';
+
+@import './base/normalize';
+@import './base/base.scss';
+
+
+
+// blocks
+
+@import './blocks/modal-message';
+@import './blocks/login-form';
+@import './blocks/nav-menu';
+@import './blocks/home';
+@import './blocks/container-tasks';

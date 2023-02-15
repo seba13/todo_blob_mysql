@@ -1,0 +1,25 @@
+doctype html
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title sesiones cookie
+        link(rel="stylesheet", href="./css/styles.css")
+    body 
+    
+    //- .bg-video
+        //- video(src="./videos/bg-video.mp4"  muted autoplay loop) 
+    include ../partials/nav-menu
+    include ../partials/modal-message
+    main 
+        block index
+        block login
+        block register
+        block home
+        block to-do
+
+    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+    script(src="./js/modal-message.js") 
+    script(src="./js/toggle-menu.js")
+    

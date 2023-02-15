@@ -1,0 +1,20 @@
+extends ../templates/template
+
+
+block register
+    
+    form(method="POST" action="/register").login-form
+        iconify-icon(icon="ph:user-circle-plus-fill").login-form__user-icon
+        .login-form__wrapper 
+            h2.login-form__title REGISTER
+        .login-form__wrapper
+            label(for="input-user").login-form__label Username: 
+            input(type="text" id="input-user" name="username" placeholder="Ingrese usuario").login-form__input
+        .login-form__wrapper
+            label(for="input-password").login-form__label Password: 
+            input(type="password" id="input-password" name="password" placeholder="Ingrese contraseña").login-form__input
+        .login-form__wrapper
+            label(for="input-name").login-form__label Fullname: 
+            input(type="text" id="input-name" name="fullname" placeholder="Ingrese nombre completo").login-form__input
+        .login-form__wrapper
+            input(type="submit" id="input-submit" value="Registrarse").login-form__input.login-form__input--submit

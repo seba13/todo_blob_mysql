@@ -1,0 +1,345 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap');
+
+
+@font-face {
+    font-family: "Gilroy";
+    font-weight: 800;
+    font-style: normal;
+    src: url("../font/gilroy/Gilroy-Black.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Gilroy";
+    font-weight: bold;
+    font-style: normal;
+    src: url("../font/gilroy/Gilroy-Bold.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Gilroy";
+    font-weight: 300;
+    font-style: normal;
+    src: url("../font/gilroy/Gilroy-Light.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "Gilroy";
+    font-weight: 400;
+    font-style: normal;
+    src: url("../font/gilroy/Gilroy-Regular.ttf") format("truetype");
+  }
+
+
+
+*
+{
+    box-sizing: border-box;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #F2B02E;
+    font-size: inherit;
+}
+
+body 
+{
+    font-family: 'Gilroy';
+    font-weight: 800;
+    min-height: 100vh;
+    height: 100vh;
+    // font-family: sans-serif;
+    background-color: #383838;
+    background-attachment: fixed;
+    background-image: linear-gradient(to bottom, #101010 0%, #38383800  10% 100%);
+    // overflow: hidden;
+    padding-top: 0.1px;
+    &::before,
+    &::after
+    {   
+        content: '';
+        width: 250px;
+        height: 250px;
+        position: fixed;
+        border-radius: 50%;
+        // background-color: red;
+        z-index: -1;
+        opacity: .15;
+    }
+
+    &::before
+    {
+        left: 0;
+        top: 0;
+        transform: translate(-50%, -17%);
+        background-image: radial-gradient(50% 50% at center, #FF5400 0%, #ff550000 100%);
+    }
+
+    &::after
+    {
+        bottom: 0;
+        right: 0;
+        transform: translate(50%, 17%);
+        background-image: radial-gradient(50% 50% at center, #F2B02E 0%, #f2b12e00 100%);
+    }
+
+
+    main
+    {
+        position: relative;
+        // margin-top: 100px;
+        z-index: 5;
+        height: 100vh;
+        // margin-bottom: 300px;   
+    }
+}
+
+
+
+.wrapper-container
+{
+    width: 100%;
+    // overflow-x: hidden;
+	// overflow-y: visible;
+    margin-bottom: 20px;
+
+}
+
+.container-img
+{
+    width: 80%;
+    height: auto;
+    border: 1px solid #fff;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-top: 100px;
+    position: relative;
+    margin-left: 20px;
+    box-shadow: -4px -4px 13px rgba(255, 255, 255, 0.259), 4px 4px 4px rgba(113, 112, 112, 0.258);
+    display: flex;
+    flex-direction: column;
+
+    img
+    {
+        width: 100%;
+        display: block;
+        position: relative;
+        border-radius: 10px;
+    }
+    .note
+    {
+        right: -10px;
+        top: 0;
+        position: absolute;
+        z-index: 10;
+        width: 150px;
+        height: 100px;
+        background-color: #ffff;
+        will-change: transform;
+        box-shadow: 0px 4px 25px -2px #000;
+        transform: translateY(-30%) rotate(-8deg);
+
+        &::before
+        {
+            content: '';
+            position: absolute;
+            width: 5px;
+            height: 20px;
+            border-radius: 5px;
+            top: -5px;
+            left: 5px;
+            border: 2px solid $color-link-orange;
+            box-shadow: 2px px 5px -2px #101010;
+        }
+        &::after
+        {
+            content: '';
+            top: 0;
+            left: 12px;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 2px 0px 0px 0px #fff;
+            width: 50px;
+            height: 3px;
+
+        }
+
+        &>iconify-icon
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(-60%);
+            color: $color-link-orange;
+
+           
+        }
+
+        &__text
+        {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: .1rem;
+            // top: 50%;
+            // left: 50%;
+            // transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: black;
+            color: $color-link-orange;
+
+          
+
+        }
+    }
+
+    .title
+    {   
+        margin-top: 22px;
+        margin-bottom: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        font-weight: bold;
+        color: #fff;
+        font-size: 22px;
+        
+    }
+
+    .content
+    {
+        color: #fff;
+        font-weight: 300;
+        // margin-left: 10px;
+        // margin-right: 10px;
+        margin: 0 10px 10px 10px;
+        line-height: 1.2rem;
+        font-size: 1rem;
+    }
+
+}
+
+
+
+@include mobile-hor
+{
+
+    .wrapper-container
+    {   
+        margin-left: auto;
+        margin-right: 80px;
+        overflow: visible;
+        width: 70%;
+        margin-bottom: 20px;
+
+        .container-img{
+            flex-direction: row;
+            margin-top: 30px;
+            width: 100%;
+            height: 180px;
+            img
+            {
+                order: 2;
+                flex: .5;
+            }
+            .note
+            {
+                width: 180px;
+                height: 140px;
+                
+                &__text
+                {
+                    font-size: 1.5rem;
+                }
+            }
+
+            .text
+            {
+                order: 1;
+                flex: 1;
+            }
+        }
+    }
+
+}
+
+@include tablet
+{
+    .wrapper-container
+    {
+        width: 500px;
+    }
+}
+
+
+@include laptop
+{
+
+    body
+    {
+        &::before,
+        &::after
+        {
+            width: 600px;
+            height: 600px;
+        }
+    }
+
+
+    .wrapper-container
+    {   
+        margin-top: 10%;
+        margin-left: auto;
+        margin-right: 5%;
+        overflow: visible;
+        width: 800px;
+        margin-bottom: 20px;
+
+        .container-img{
+            flex-direction: row;
+            margin-top: 30px;
+            width: 100%;
+            height: 300px;
+            img
+            {
+                order: 2;
+                flex: .5;
+            }
+            .note
+            {
+                width: 180px;
+                height: 140px;
+                
+                &__text
+                {
+                    font-size: 1.5rem;
+                }
+            }
+
+            .text
+            {
+                order: 1;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: 
+                center;
+                background-color: #3838385b;
+                .title
+                {
+                    margin-bottom: 30px;
+                    border-bottom: 1px solid #fff;
+                    margin-left: 0;
+                    padding-left: 10px;
+                    width: 100%;
+                }
+                .content{
+                    width: 80%;
+                    margin-bottom: 60px;
+                }
+            }
+        }
+    }
+}

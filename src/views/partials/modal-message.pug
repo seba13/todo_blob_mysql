@@ -1,0 +1,9 @@
+if (message && message.length > 0)
+    -let parrafo = ''
+    -let flag = message[0].status == 'success' ? true : false;
+    //- p=message[0].status
+    #modal-message.modal-message(class= flag ? 'modal-message--success' : 'modal-message--error')
+        each string,index in message
+            p.modal-message__title=string.title
+            each message in string.message
+                p.modal-message__message=message

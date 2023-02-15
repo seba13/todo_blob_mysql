@@ -1,0 +1,80 @@
+
+
+
+
+-
+    const linksUser = [
+        {
+            url: '/login',
+            selected: 'login',
+            name: 'Iniciar Sesión',
+            icon: {
+                tag: "iconify-icon",
+                icon: 'mdi:login'
+            }
+        },
+         {
+            url: '/register',
+            selected: 'register',
+            name: 'Registrarse',
+            icon: {
+                tag: "iconify-icon",
+                icon: 'mdi:register'
+            }
+        },
+    ]
+
+- 
+    const mainLinks = [
+        {
+            url: '/',
+            name: 'Inicio',
+            selected: 'index',
+            icon: {
+                tag: "iconify-icon",
+                icon: 'material-symbols:home',
+                class: 'link--active'
+            }
+        },
+         {
+            url: '/',
+            name: 'Acerca de',
+            selected: 'about',
+            icon: {
+                tag: "iconify-icon",
+                icon: 'mdi:about'
+            }
+        },
+         {
+            url: '/',
+            name: 'Blog',
+            selected: 'blog',
+            icon: {
+                tag: "iconify-icon",
+                icon: 'mdi:blog',
+            }
+        },
+    ]
+
+-    
+    const logout = [
+        {
+            url: '/to-do',
+            name: 'Tareas',
+            selected: 'to-do',
+            icon: {
+                    tag: "iconify-icon",
+                    icon: 'clarity:tasks-solid'
+                }
+        },
+        {
+            url: '/logout',
+            name: 'Cerrar Sesión',
+            icon: {
+                    tag: "iconify-icon",
+                    icon: 'ri:logout-box-line'
+                }
+        },
+    ]
+
+    //-   li.nav-menu__item: a(href="/to-do")= "Tareas"

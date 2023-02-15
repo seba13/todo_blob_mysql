@@ -1,0 +1,43 @@
+extends ../templates/template
+
+block home
+    
+    
+    if(user)
+        h1.title Bienvenido !{user.username}
+    else
+        h1 indefinido
+
+    
+    //- .user-info
+    //-     .wrapper-info
+    //-         form(action="")  
+    //-             label.user-info__label(for="logo-user")
+    //-                 img.user-info__img(src="./img/logo-user.webp", alt="")
+    //-                 iconify-icon(icon="material-symbols:edit")
+    //-             input.user-info__input#logo-user(type="file", name="") 
+
+
+    form#form-update-user(method="POST" action="/update-user").login-form
+        label.user-info__label(for="logo-user")
+            picture
+                img#img-user.user-info__img(src="" alt="user avatar")
+                
+            iconify-icon(icon="material-symbols:edit")
+        input.user-info__input#logo-user(type="file", name="logo-user" accept='image/jpg,image/jpeg,image/png,image/gif,image/webp') 
+        .login-form__wrapper
+            h2.login-form__title Actualizar Datos
+        .login-form__wrapper
+            label(for="input-password").login-form__label Old password: 
+            input(type="password" id="input-password" name="old-password" placeholder="password").login-form__input
+        .login-form__wrapper
+            label(for="input-re-password").login-form__label New password: 
+            input(type="password" id="input-re-password" name="new-password" placeholder="password").login-form__input
+        .login-form__wrapper
+            label(for="input-name").login-form__label Fullname: 
+            input(type="text" id="input-name" name="fullname" placeholder="Ingrese nombre completo" value=user.fullname ).login-form__input
+        .login-form__wrapper
+            input(type="submit" id="input-submit" value="Guardar Cambios").login-form__input.login-form__input--submit
+
+
+    script(src="./js/home.js") 
