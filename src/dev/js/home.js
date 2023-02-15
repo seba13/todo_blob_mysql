@@ -1,6 +1,9 @@
 
 let updateUserForm = document.getElementById('form-update-user')
-let imgUser = document.getElementById('img-user')
+let imgContainer = document.getElementById('img-container')
+
+// let imgUser = document.getElementById('img-user')
+let imgUser = undefined
 
 
 
@@ -9,6 +12,21 @@ updateUserForm.addEventListener('submit', saveChangesUser)
 
 
 
+document.body.addEventListener('load', createImg)
+
+document.body.dispatchEvent(new Event('load'))
+
+async function createImg(e) {
+
+    imgUser = document.createElement('img')
+    imgUser.setAttribute('id', 'img-user')
+    imgUser.classList.add('user-info__img')
+
+    await getAvatarUser()
+    imgContainer.append(imgUser)
+
+    
+}
 
 
 
@@ -39,9 +57,9 @@ async function getAvatarUser() {
     imgUser.setAttribute('src', url)
 
 
-    // imgUser.addEventListener('error', fallbackImg)
+    imgUser.addEventListener('error', fallbackImg)
 }
-getAvatarUser()
+
 
 
 

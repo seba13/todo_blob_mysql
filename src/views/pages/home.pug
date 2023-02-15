@@ -20,8 +20,8 @@ block home
 
     form#form-update-user(method="POST" action="/update-user").login-form
         label.user-info__label(for="logo-user")
-            picture
-                img#img-user.user-info__img(src="" alt="user avatar")
+            picture#img-container
+                //- img#img-user.user-info__img(src="" alt="user avatar")
                 
             iconify-icon(icon="material-symbols:edit")
         input.user-info__input#logo-user(type="file", name="logo-user" accept='image/jpg,image/jpeg,image/png,image/gif,image/webp') 

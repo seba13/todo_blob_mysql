@@ -5,26 +5,61 @@ function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyri
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var updateUserForm = document.getElementById('form-update-user');
-var imgUser = document.getElementById('img-user');
+var imgContainer = document.getElementById('img-container');
+
+// let imgUser = document.getElementById('img-user')
+var imgUser = undefined;
 updateUserForm.addEventListener('change', changeImg);
 updateUserForm.addEventListener('submit', saveChangesUser);
-function getAvatarUser() {
-  return _getAvatarUser.apply(this, arguments);
+document.body.addEventListener('load', createImg);
+document.body.dispatchEvent(new Event('load'));
+function createImg(_x) {
+  return _createImg.apply(this, arguments);
 }
-function _getAvatarUser() {
-  _getAvatarUser = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var response, json, uint8Array, blob, url;
+function _createImg() {
+  _createImg = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          _context.next = 2;
+          imgUser = document.createElement('img');
+          imgUser.setAttribute('id', 'img-user');
+          imgUser.classList.add('user-info__img');
+          _context.next = 5;
+          return getAvatarUser();
+        case 5:
+          imgContainer.append(imgUser);
+        case 6:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+  return _createImg.apply(this, arguments);
+}
+function getAvatarUser() {
+  return _getAvatarUser.apply(this, arguments);
+}
+/**
+ * Agrega una imagen como avatar en caso de no encontrar 
+ * el recurso del usuario
+ * Por otro lado si el recurso de fallback no se encuentra
+ * remueve el evento para evitar un loop infinito
+ * @param {*} e event
+ */
+function _getAvatarUser() {
+  _getAvatarUser = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    var response, json, uint8Array, blob, url;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          _context2.next = 2;
           return fetch('/getimg');
         case 2:
-          response = _context.sent;
-          _context.next = 5;
+          response = _context2.sent;
+          _context2.next = 5;
           return response.json();
         case 5:
-          json = _context.sent;
+          json = _context2.sent;
           uint8Array = new Uint8Array(json.buffer.data);
           console.log(uint8Array);
           blob = new Blob([uint8Array], {
@@ -35,25 +70,15 @@ function _getAvatarUser() {
           url = URL.createObjectURL(blob);
           console.log(url);
           imgUser.setAttribute('src', url);
-
-          // imgUser.addEventListener('error', fallbackImg)
-        case 14:
+          imgUser.addEventListener('error', fallbackImg);
+        case 15:
         case "end":
-          return _context.stop();
+          return _context2.stop();
       }
-    }, _callee);
+    }, _callee2);
   }));
   return _getAvatarUser.apply(this, arguments);
 }
-getAvatarUser();
-
-/**
- * Agrega una imagen como avatar en caso de no encontrar 
- * el recurso del usuario
- * Por otro lado si el recurso de fallback no se encuentra
- * remueve el evento para evitar un loop infinito
- * @param {*} e event
- */
 function fallbackImg(e) {
   e.target.setAttribute('src', '../img/logo-user.webp');
   imgUser.removeEventListener('error', fallbackImg);
