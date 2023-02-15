@@ -7,7 +7,8 @@
 
 
 
-# todo app almacenando imagenes blob en mysql
+# to-do app 
+## update almacena imagenes blob en mysql
 
 Aplicación CRUD para definir tareas
 
