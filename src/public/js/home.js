@@ -28,7 +28,8 @@ function _createImg() {
           return getAvatarUser();
         case 5:
           imgContainer.append(imgUser);
-        case 6:
+          imgUser.addEventListener('error', fallbackImg);
+        case 7:
         case "end":
           return _context.stop();
       }
@@ -52,14 +53,19 @@ function _getAvatarUser() {
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          _context2.next = 2;
+          _context2.prev = 0;
+          _context2.next = 3;
           return fetch('/getimg');
-        case 2:
+        case 3:
           response = _context2.sent;
-          _context2.next = 5;
+          _context2.next = 6;
           return response.json();
-        case 5:
+        case 6:
           json = _context2.sent;
+          if (!json.buffer) {
+            _context2.next = 18;
+            break;
+          }
           uint8Array = new Uint8Array(json.buffer.data);
           console.log(uint8Array);
           blob = new Blob([uint8Array], {
@@ -70,12 +76,22 @@ function _getAvatarUser() {
           url = URL.createObjectURL(blob);
           console.log(url);
           imgUser.setAttribute('src', url);
-          imgUser.addEventListener('error', fallbackImg);
-        case 15:
+          _context2.next = 19;
+          break;
+        case 18:
+          throw new Error('Imagen no encontrada');
+        case 19:
+          _context2.next = 24;
+          break;
+        case 21:
+          _context2.prev = 21;
+          _context2.t0 = _context2["catch"](0);
+          imgUser.setAttribute('src', '../img/logo-user.webp');
+        case 24:
         case "end":
           return _context2.stop();
       }
-    }, _callee2);
+    }, _callee2, null, [[0, 21]]);
   }));
   return _getAvatarUser.apply(this, arguments);
 }

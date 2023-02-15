@@ -3,6 +3,9 @@ import { fileURLToPath } from "url";
 
 import * as dotenv from 'dotenv' 
 
+import moment from 'moment-timezone'
+
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
@@ -50,6 +53,17 @@ app.use(express.json())
 // entiende los datos que vienen desde un formulario
 app.use(express.urlencoded({ extended: true }))
 
+
+let date = new Date()
+
+// la cookie se muestra en formato gmt
+// al guardarse se transforma a la zona horario local
+// la zona horario en Chile gmt -3 
+date.setHours(date.getHours() + 2)
+
+
+
+
 app.use(session({
     name: 'test-express-session',
     secret: "secret",
@@ -57,7 +71,8 @@ app.use(session({
     store: sessionStore,
     saveUninitialized: false,
     cookie: {
-        maxAge: 1000*60*60,
+        // maxAge: 1000*60*60,
+        expires: moment.tz(date, 'America/Santiago').toDate()
     }
 }))
 

@@ -24,6 +24,7 @@ async function createImg(e) {
 
     await getAvatarUser()
     imgContainer.append(imgUser)
+    imgUser.addEventListener('error', fallbackImg)
 
     
 }
@@ -34,30 +35,35 @@ async function createImg(e) {
 async function getAvatarUser() {
 
 
-    let response = await fetch('/getimg')
+    try{
+        let response = await fetch('/getimg')
 
 
-    // let buffer = await response.arrayBuffer()
-    let json = await response.json()
+        // let buffer = await response.arrayBuffer()
+        let json = await response.json()
 
+        if(json.buffer){
+            const uint8Array = new Uint8Array(json.buffer.data)
 
-    const uint8Array = new Uint8Array(json.buffer.data)
+            console.log(uint8Array);
 
-    console.log(uint8Array);
+            let blob = new Blob( [uint8Array] , {type: json.mimetype})
 
-    let blob = new Blob( [uint8Array] , {type: json.mimetype})
+            console.log(json.blob);
+            console.log(blob);
 
-    console.log(json.blob);
-    console.log(blob);
+            let url = URL.createObjectURL(blob)
 
-    let url = URL.createObjectURL(blob)
+            console.log(url);
 
-    console.log(url);
+            imgUser.setAttribute('src', url)
+        }else{
+            throw new Error('Imagen no encontrada')
+        }
+    }catch(err){
+        imgUser.setAttribute('src', '../img/logo-user.webp')
+    }
 
-    imgUser.setAttribute('src', url)
-
-
-    imgUser.addEventListener('error', fallbackImg)
 }
 
 
