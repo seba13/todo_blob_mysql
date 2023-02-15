@@ -14,6 +14,7 @@ Aplicación CRUD para definir tareas
 Permite crear un perfil de usuario con las credenciales username y password
 
 Es posible cambiar el avatar del usuario
+
 esta aplicación ha sido desarrollada con las siguientes tecnologías principalmente:
 
 * NodeJs
