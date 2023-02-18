@@ -277,7 +277,7 @@ dependencias de desarrollo:
 
 
 
-<!-- 
+
 ![imagen index](https://i.ibb.co/WtY0z7z/index.png "Index to-do")
 
 ![imagen index mobile](https://i.ibb.co/kmFrSH0/index-mobile.png "index mobile")
@@ -298,7 +298,7 @@ dependencias de desarrollo:
 ![imagen home mobile](https://i.ibb.co/K09Txxf/home-mobile.png "home mobile")
 
 ![imagen tasks desktop](https://i.ibb.co/ZJcTmh8/tasks.png "tasks desktop")
-![imagen tasks mobile](https://i.ibb.co/yp2vWhS/tasks-mobile.png "tasks mobile") -->
+![imagen tasks mobile](https://i.ibb.co/yp2vWhS/tasks-mobile.png "tasks mobile")
 
 
 
