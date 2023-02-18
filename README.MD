@@ -74,7 +74,7 @@ dependencias de desarrollo:
     }
 ```
 
-# Princiales Configuraciones app.js
+# Principales Configuraciones app.js
 
 
 ```JavaScript
