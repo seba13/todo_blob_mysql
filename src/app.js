@@ -73,7 +73,7 @@ app.use(session({
     store: sessionStore,
     saveUninitialized: false,
     cookie: {
-        maxAge: 1*1000*30,
+        maxAge: 1*1000*60*20,
         httpOnly: true
         // expires: moment.tz(new Date().setSeconds(new Date().getSeconds() + 30 ), 'America/Santiago').toDate()
     }
