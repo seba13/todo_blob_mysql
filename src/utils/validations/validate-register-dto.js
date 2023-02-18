@@ -68,7 +68,7 @@ export const validateRegister = (req, res, next) => {
         console.log(mensaje);
     
         req.flash('info', [{title: 'Registro', message: mensaje, status: "error"}])
-        return res.status(400).redirect('./register')
+        return res.status(400).redirect('/register')
     }
 
     next()

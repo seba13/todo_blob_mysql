@@ -28,6 +28,7 @@ pool.getConnection((err, connection) => {
 
 pool.on('release', (connection) => {
 
+
     console.log("conexion "+ connection.threadId + " lanzada");
 
 })

@@ -4,7 +4,40 @@ block home
     
     
     if(user)
-        h1.title Bienvenido !{user.username}
+        h1.title Bienvenido !{user.fullname}
+   
+        //- h6.title#time(style= "position: absolute; top:10px; left: 0;")
+        //- script.
+        //-     let time = "!{date}"
+        //-     let timeEl = document.getElementById('time')
+        //-     let btnLogout = document.getElementById('logout')
+        //-     let maxAge = (new Date(!{date}) - new Date())
+
+        //-     console.log(maxAge)
+        //-     function timer(){
+
+        //-         let tiempoRestante = Math.round(("!{date}" - new Date()) / 1000)
+        //-         let minutos = Math.floor(tiempoRestante/60)
+        //-         let segundos = tiempoRestante%60
+        //-         console.log(tiempoRestante)
+        //-         if(minutos > 0)
+        //-             timeEl.textContent = "Sesión expira en " + minutos + " minutos y " + segundos + " segundos"
+        //-         else
+        //-             timeEl.textContent = "Sesión expira en " + segundos + " segundos"
+
+        //-         //- if(tiempoRestante === 0) {
+        //-         //-     //- btnLogout.click()
+        //-         //-     clearInterval(intervalo)
+        //-         //- }
+            
+        //-     }
+
+        //-     const intervalo = setInterval(timer, 1000)
+
+        //-     setTimeout(()=>{
+        //-         clearInterval(intervalo)
+        //-     }, maxAge)
+
     else
         h1 indefinido
 
@@ -25,13 +58,24 @@ block home
                 
             iconify-icon(icon="material-symbols:edit")
         input.user-info__input#logo-user(type="file", name="logo-user" accept='image/jpg,image/jpeg,image/png,image/gif,image/webp') 
+        span.tooltip
+            | Ayuda 
+            ul.tooltip__message.tooltip__message--hidden
+                li 
+                    span Para cambiar la contraseña es necesario rellenar los campos 
+                        strong old password 
+                        | y 
+                        strong new password
+                li  
+                    span Para cambiar fullname es necesario rellenar el campo 
+                        strong old passwod    
         .login-form__wrapper
             h2.login-form__title Actualizar Datos
         .login-form__wrapper
-            label(for="input-password").login-form__label Old password: 
+            label(for="input-password").login-form__label Contraseña Actual: 
             input(type="password" id="input-password" name="old-password" placeholder="password").login-form__input
         .login-form__wrapper
-            label(for="input-re-password").login-form__label New password: 
+            label(for="input-re-password").login-form__label Contraseña Nueva: 
             input(type="password" id="input-re-password" name="new-password" placeholder="password").login-form__input
         .login-form__wrapper
             label(for="input-name").login-form__label Fullname: 
@@ -40,4 +84,5 @@ block home
             input(type="submit" id="input-submit" value="Guardar Cambios").login-form__input.login-form__input--submit
 
 
+    script(src="./js/tooltip.js")
     script(src="./js/home.js") 

@@ -1,9 +1,12 @@
 import { getUser } from "./query/users/validityUser.js"
-import {updateLogoUser} from './query/users/updateUser.js'
+import {updateLogoUser, updateUser} from './query/users/updateUser.js'
 import {optimizeImg} from '../utils/remove-logo-user.js'
 import {saveBlobImg} from '../controllers/query/users/saveImgBlob.js'
 import {getAvatarImg} from '../controllers/query/users/getimgBlob.js'
 
+import {encryptPassword, comparePassword} from '../utils/encrypt-password.js'
+
+import moment from 'moment-timezone'
 
 /**
  * funcion controladora que renderiza el home de un usuario con autenticación
@@ -43,8 +46,15 @@ export const renderHome = (req, res) => {
             .then(user => {
 
                 if(user) {  
+
+                    // console.log(req.session.cookie.maxAge);
+
                     return res.render('./home', {
                         user: user,
+                        date: new Date().setMilliseconds(new Date().getMilliseconds() + req.session.cookie.maxAge)
+                        // date: req.session.cookie._expires
+                        // date: "hola"
+                        
                     })
                 }else {
                     return res.status(403).redirect('/')
@@ -56,7 +66,7 @@ export const renderHome = (req, res) => {
 
 
 
-export const updateUserCtrl = ( async(req, res) => {
+export const updateImageUserCtrl = ( async(req, res) => {
 
     if(req.file){
 
@@ -73,7 +83,7 @@ export const updateUserCtrl = ( async(req, res) => {
 
             updateLogoUser({"logo-user": "./uploads/"+req.file.filename, idUser: req.session.userId})
 
-            return res.status(202).json({message: "Datos Actualizados con éxito"})
+            return res.status(202).json({message: "Imagen actualizada con éxito"})
         }catch(err){
             console.log("catch error");
             console.log(err.message);
@@ -85,6 +95,45 @@ export const updateUserCtrl = ( async(req, res) => {
 
 
 })
+
+
+export const updateUserCtrl = async(req, res) => {
+
+    // SE ALMACENAN LOS DATOS
+
+    console.log("entra en controller");
+    
+
+    let user = await getUser(req.session.userId)
+
+    let isValid = await comparePassword(req.body['old-password'], user.password)
+
+    if(!isValid) return res.status(400).json({error: "Contraseña actual incorrecta"})
+
+
+    console.log(req.body);
+
+    if(req.body['new-password']) {
+        req.body['new-password'] = await encryptPassword(req.body['new-password'])
+    }
+
+
+    let rowInfo = await updateUser(req.body, req.session.userId)
+    
+    if(rowInfo.affectedRows > 0) {
+        return res.status(200).json({message: 'Usuario actualizado con éxito'})
+    }else{
+        return res.status(400).json({error: 'No ha sido posible actualizar usuario'})
+    }
+
+
+    // res.status(200).json({
+    //     message: "recibido"
+    // })
+
+}
+
+
 
 export const getImgUser = async(req, res) => {
 

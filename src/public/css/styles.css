@@ -666,8 +666,9 @@ body main {
       -ms-flex-align: center;
           align-items: center;
   opacity: 0;
-  -webkit-animation: show 3s linear forwards, hide 1.4s 3s linear forwards;
-          animation: show 3s linear forwards, hide 1.4s 3s linear forwards;
+  padding-left: 1rem;
+  -webkit-animation: show 3s linear forwards, hide 1.2s 3s linear forwards;
+          animation: show 3s linear forwards, hide 1.2s 3s linear forwards;
 }
 .modal-message--success {
   background-color: #3a86ff;
@@ -716,6 +717,8 @@ body main {
   -webkit-flex: 0.5;
       -ms-flex: 0.5;
           flex: 0.5;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   margin-left: 5px;
   text-transform: capitalize;
 }
@@ -724,6 +727,8 @@ body main {
 }
 .modal-message__message::before {
   content: "●";
+  position: absolute;
+  margin-left: -1rem;
   color: #FFF;
   font-size: 16px;
 }
@@ -894,7 +899,7 @@ input::placeholder {
   font-size: 20px;
 }
 .login-form__input {
-  color: #182D3E;
+  color: #FF5400;
   width: 90%;
   border: none;
   background-color: transparent;
@@ -1049,6 +1054,7 @@ input::placeholder {
 .wrapper-nav .topbar .nav-menu__item {
   list-style-type: none;
   margin-bottom: 25px;
+  max-width: 300px;
 }
 .wrapper-nav .topbar .nav-menu__item a {
   text-decoration: none;
@@ -1071,6 +1077,13 @@ input::placeholder {
   -webkit-flex: 1;
       -ms-flex: 1;
           flex: 1;
+}
+.wrapper-nav .topbar .nav-menu__item--timer a {
+  padding-right: 1rem;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .wrapper-nav .topbar .nav--hidden {
   -webkit-transform: translate(-100%);
@@ -1220,7 +1233,92 @@ input::placeholder {
         -ms-flex: 1;
             flex: 1;
   }
+  .wrapper-nav .topbar .nav-menu__item--timer a {
+    padding: 0.6rem;
+  }
 }
+.tooltip {
+  display: block;
+  position: absolute;
+  top: 10%;
+  left: 10px;
+  margin-left: auto;
+  font-size: 1rem;
+  padding: 0.5rem 0.5rem;
+  margin-top: -3rem;
+  margin-right: 5rem;
+  background-color: #182D3E;
+  color: #EBEAEF;
+  border-radius: 15px;
+}
+.tooltip:hover .tooltip__message {
+  -webkit-transition: -webkit-transform 0.25s -0.07s ease;
+  transition: -webkit-transform 0.25s -0.07s ease;
+  transition: transform 0.25s -0.07s ease;
+  transition: transform 0.25s -0.07s ease, -webkit-transform 0.25s -0.07s ease;
+  -webkit-transform: translate(0) scale(1);
+      -ms-transform: translate(0) scale(1);
+          transform: translate(0) scale(1);
+}
+@media screen and (min-width: 481px) {
+  .tooltip:hover .tooltip__message {
+    -webkit-transform: translate(-50%) scale(1);
+        -ms-transform: translate(-50%) scale(1);
+            transform: translate(-50%) scale(1);
+  }
+}
+.tooltip__message {
+  padding: 0.5rem 1rem 0.5rem 1.5rem;
+  border-radius: 1rem;
+  position: absolute;
+  margin-top: 20px;
+  left: 0%;
+  -webkit-transform: translate(0) scale(0);
+      -ms-transform: translate(0) scale(0);
+          transform: translate(0) scale(0);
+  width: 250px;
+  background-color: #182D3E;
+  -webkit-transition: -webkit-transform 0.25s ease;
+  transition: -webkit-transform 0.25s ease;
+  transition: transform 0.25s ease;
+  transition: transform 0.25s ease, -webkit-transform 0.25s ease;
+}
+.tooltip__message::after {
+  content: "";
+  border-bottom: 20px solid #182D3E;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  left: 15px;
+  top: -10px;
+  position: absolute;
+}
+@media screen and (min-width: 481px) {
+  .tooltip__message::after {
+    left: 50%;
+  }
+}
+.tooltip__message li {
+  list-style-type: none;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+}
+.tooltip__message li::before {
+  content: "»";
+  position: absolute;
+  margin-left: -1rem;
+}
+.tooltip__message strong {
+  color: #FF5400;
+  font-weight: 700;
+}
+@media screen and (min-width: 481px) {
+  .tooltip__message {
+    -webkit-transform: translate(-50%) scale(0);
+        -ms-transform: translate(-50%) scale(0);
+            transform: translate(-50%) scale(0);
+  }
+}
+
 .title {
   color: #fff;
   margin-left: 2rem;

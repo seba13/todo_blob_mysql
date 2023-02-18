@@ -20,6 +20,9 @@ import session from "express-session";
 import MySQLStore from "express-mysql-session";
 import flash from 'connect-flash'
 import indexRouter from './routes/index.routes.js'
+
+
+
 // import authRouter from './routes/auth.routes.js'
 // import homeRouter from './routes/home.routes.js'
 // import todoRouter from './routes/to-do.routes.js'
@@ -31,9 +34,9 @@ import {pool} from './config/db.js'
 
 
 const PORT = process.env.PORT || 8080
+
+
 const MySQLStorage = MySQLStore(session)
-
-
 export const sessionStore = new MySQLStorage({...options, createDatabaseTable: true}, pool)
 
 // create express application
@@ -50,18 +53,17 @@ app.use(flash())
 
 // entiende los datos que vienen en formato json
 app.use(express.json())
+
 // entiende los datos que vienen desde un formulario
 app.use(express.urlencoded({ extended: true }))
 
 
-let date = new Date()
+
 
 // la cookie se muestra en formato gmt
 // al guardarse se transforma a la zona horario local
 // la zona horario en Chile gmt -3 
-date.setHours(date.getHours() + 2)
-
-
+// date.setHours(date.getHours() + 2)
 
 
 app.use(session({
@@ -71,17 +73,26 @@ app.use(session({
     store: sessionStore,
     saveUninitialized: false,
     cookie: {
-        // maxAge: 1000*60*60,
-        expires: moment.tz(date, 'America/Santiago').toDate()
+        maxAge: 1*1000*30,
+        httpOnly: true
+        // expires: moment.tz(new Date().setSeconds(new Date().getSeconds() + 30 ), 'America/Santiago').toDate()
     }
 }))
 
-app.use( (req, res, next) => {
 
-    app.locals.message =req.flash('info')
 
+
+
+
+
+app.use( function middle(req, res, next) {
+
+    app.locals.message = req.flash('info')
     next()
 })
+
+
+
 
 
 

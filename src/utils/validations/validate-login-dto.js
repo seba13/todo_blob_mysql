@@ -90,7 +90,7 @@ export const validateLogin = (req, res, next) => {
         console.log(mensaje);
 
         req.flash('info', [{title: 'Autenticación', message: mensaje, status: "error"}])
-        res.status(400).redirect('./login')
+        res.status(400).redirect('/login')
     }
 
 

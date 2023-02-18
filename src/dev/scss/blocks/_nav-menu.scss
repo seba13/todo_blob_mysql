@@ -124,6 +124,7 @@
                 {
                     list-style-type: none;
                     margin-bottom: 25px;
+                    max-width: 300px;
                     a
                     {
                         text-decoration: none;
@@ -140,6 +141,16 @@
                         {
                             flex: 1;
                         }
+                    }
+                    
+                    &--timer
+                    {
+                        a
+                        {
+                            padding-right: 1rem;
+                            align-items: center;
+                        }
+                    
                     }
                 }
             }
@@ -241,7 +252,6 @@
                         margin-bottom: 0;
                         margin-right: 20px;
 
-
                         &:hover a
                         {
                             background-color: #fff;
@@ -278,6 +288,16 @@
                                 flex: 1;
                             }
                         }
+
+                        &--timer
+                        {
+                            a
+                            {
+                                padding: .6rem;
+                            }
+                        
+                        }
+
                     }
 
                 }

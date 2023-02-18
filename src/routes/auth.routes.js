@@ -10,11 +10,11 @@ import {validateRegister} from '../utils/validations/validate-register-dto.js'
 const router = Router();
 
 
-router.post('/login', validateLogin, loginController)
+router.post('/auth/login', validateLogin, loginController)
 router.get('/login',redirectHome, renderLogin)
 
 
-router.post('/register', validateRegister,registerController)
+router.post('/auth/register', validateRegister,registerController)
 router.get('/register',redirectHome, renderRegister)
 
 

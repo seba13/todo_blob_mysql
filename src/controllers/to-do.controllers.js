@@ -23,7 +23,8 @@ export const renderTodo = (req, res) => {
                         console.log(tasks);
                         return res.render('./to-do', {
                             user,
-                            tasks
+                            tasks,
+                            date: new Date().setMilliseconds(new Date().getMilliseconds() + req.session.cookie.maxAge)
                         })
 
                     })

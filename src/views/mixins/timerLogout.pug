@@ -1,0 +1,134 @@
+
+
+
+
+mixin setTimer()
+    //- h6.title#time(style= "position: absolute; top:10px; left: 0;")
+    
+    li.nav-menu__item.nav-menu__item--timer: a(href="#" )
+        iconify-icon(icon="ic:sharp-timer")
+        span#time Sesión expira en
+    
+    
+    script.
+        let time = "!{date}"
+        let timeEl = document.getElementById('time')
+        let btnLogout = document.getElementById('logout')
+        //- let maxAge = (time - new Date())
+
+        let tiempoRestante = Math.round(("!{date}" - Date.now()) / 1000)
+        let minutos = Math.floor(tiempoRestante/60)
+        let segundos = tiempoRestante%60
+
+        if(minutos > 0)
+            timeEl.textContent = "Sesión expira en " + minutos + " minutos y " + segundos + " segundos"
+        else
+            timeEl.textContent = "Sesión expira en " + segundos + " segundos"
+
+        //- console.log(maxAge)
+        function timer(){
+
+            tiempoRestante = Math.round(("!{date}" -  Date.now() ) / 1000)
+            minutos = Math.floor(tiempoRestante/60)
+            segundos = tiempoRestante%60
+
+            console.log(tiempoRestante)
+
+            if(minutos > 0)
+                timeEl.textContent = "Sesión expira en " + minutos + " minutos y " + segundos + " segundos"
+            else
+                timeEl.textContent = "Sesión expira en " + segundos + " segundos"
+
+            if(tiempoRestante === 0) {
+                btnLogout.click()
+                clearInterval(intervalo)
+            }
+        
+        }
+
+        const intervalo = setInterval(timer, 1000)
+
+
+        window.addEventListener('visibilitychange', () => {
+            if("!{date}" -  new Date()  < 0) {
+                btnLogout.click()
+            }
+        })
+
+        //- setTimeout(()=>{
+        //-     clearInterval(intervalo)
+        //-     btnLogout.click()
+        //- }, maxAge)
+
+
+
+
+
+
+
+
+
+
+
+
+        //-  script.
+        //- let time = "!{date}"
+        //- //- let timeEl = document.getElementById('time')
+        //- let btnLogout = document.getElementById('logout')
+        //- let maxAge = (time - new Date())
+
+
+        //- let navItem = document.createElement('li')
+        //- navItem.classList.add("nav-menu__item","nav-menu__item--timer")
+
+        //- let linkItem = document.createElement('a')
+        //- linkItem.setAttribute('href', '#')
+
+        //- navItem.append(linkItem)
+
+        //- let icon = document.createElement('iconify-icon')
+        //- icon.setAttribute('icon', 'ic:sharp-timer')
+
+        //- let spanText = document.createElement('span')
+        //- spanText.setAttribute('id', 'time')
+
+        //- linkItem.append(icon)
+        //- linkItem.append(spanText)
+
+        //- let tiempoRestante = Math.round(("!{date}" - new Date()) / 1000)
+        //- let minutos = Math.floor(tiempoRestante/60)
+        //- let segundos = tiempoRestante%60
+        //- console.log(tiempoRestante)
+        //- if(minutos > 0)
+        //-     spanText.textContent = "Sesión expira en " + minutos + " minutos y " + segundos + " segundos"
+        //- else
+        //-     spanText.textContent = "Sesión expira en " + segundos + " segundos"
+        //- console.log(maxAge)
+
+        //- let navMenu = document.getElementById('nav-menu-logout')
+        //- navMenu.append(navItem)
+
+        //- function timer(){
+
+        //-     let tiempoRestante = Math.round(("!{date}" - new Date()) / 1000)
+        //-     let minutos = Math.floor(tiempoRestante/60)
+        //-     let segundos = tiempoRestante%60
+        //-     console.log(tiempoRestante)
+        //-     if(minutos > 0)
+        //-         spanText.textContent = "Sesión expira en " + minutos + " minutos y " + segundos + " segundos"
+        //-     else
+        //-         spanText.textContent = "Sesión expira en " + segundos + " segundos"
+
+        //-     //- if(tiempoRestante === 0) {
+        //-     //-     //- btnLogout.click()
+        //-     //-     clearInterval(intervalo)
+        //-     //- }
+        
+        //- }
+
+        //- const intervalo = setInterval(timer, 1000)
+
+        //- setTimeout(()=>{
+        //-     clearInterval(intervalo)
+        //-     btnLogout.click()
+        //- }, maxAge)

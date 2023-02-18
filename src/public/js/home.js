@@ -10,7 +10,7 @@ var imgContainer = document.getElementById('img-container');
 // let imgUser = document.getElementById('img-user')
 var imgUser = undefined;
 updateUserForm.addEventListener('change', changeImg);
-updateUserForm.addEventListener('submit', saveChangesUser);
+updateUserForm.addEventListener('submit', updateUser);
 document.body.addEventListener('load', createImg);
 document.body.dispatchEvent(new Event('load'));
 function createImg(_x) {
@@ -122,8 +122,17 @@ function changeImg(e) {
     if (e.target.files.length > 0) {
       if (validateImg(e.target.files[0])) {
         imgUser.setAttribute('src', URL.createObjectURL(e.target.files[0]));
+
+        // almacena la img en la bd
+        saveImage(e.target);
       } else {
-        // e.target.value = ''
+        console.log(e.target.files[0]);
+        createModalMessage({
+          flag: false,
+          title: 'Actualizar Imagen Perfil',
+          message: "Formato de imagen invalido\n extensión archivo seleccionado: ." + e.target.files[0].name.split('.').pop() + '\n Formatos soportados: ' + MIMETYPES.join(' ')
+        });
+        e.target.value = '';
       }
     }
     // let fr = new FileReader()
@@ -153,17 +162,19 @@ function validateImg(file) {
  * envia a través de método POST los parametros a actualizar
  * @param {*} e event
  */
-function saveChangesUser(e) {
-  e.preventDefault();
-
+function saveImage(inputFile) {
   // console.log(e.target.elements);
 
-  var formData = new FormData(e.target);
-  fetch('/update-user', {
+  var formData = new FormData();
+
+  // formData.append('clave','valor')
+  formData.append("logo-user", inputFile.files[0]);
+  console.log("fetch update image user");
+  fetch('/update/image-user', {
     headers: {
       // "content-Type" : 'multipart/form-data'
     },
-    method: 'POST',
+    method: 'PATCH',
     body: formData
   }).then(function (response) {
     return response.json();
@@ -171,9 +182,80 @@ function saveChangesUser(e) {
     if (json.error) {
       throw new Error(json.error);
     } else {
-      console.log(json);
+      console.log(json.message);
+      createModalMessage({
+        flag: true,
+        title: 'Actualizar Imagen Perfil',
+        message: json.message
+      });
     }
   })["catch"](function (err) {
     console.log(err.message);
   });
+}
+function updateUser(_x2) {
+  return _updateUser.apply(this, arguments);
+}
+function _updateUser() {
+  _updateUser = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
+    var data, response, json;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          e.preventDefault();
+          console.log(e.target.elements);
+
+          // ENVIANDO DATA A TRAVES MULTIPART/FORM-DATA 
+          // SE DEBE UTILIZAR UN MIDDLEWARE QUE PARSEE EL FORMDATA, COMO MULTER O EXPRESS-FORMIDABLE
+          // LOS CAMPOS QUE NO SON FILES EN EXPRESS-FORMIDALBE ESTAN EN REQ.FIELDS
+
+          // let formData = new FormData()
+
+          // // formulario.elements => HTMLFormControlsCollection
+          // // formulario.elements.nameInput
+          // formData.append('old-password', e.target.elements['old-password'].value)
+          // formData.append('new-password', e.target.elements['new-password'].value)
+          // formData.append('fullname', e.target.elements['fullname'].value)
+
+          // SEGUNDA OPCION MANDAR LA DATA EN UN JSON
+          data = {
+            'old-password': e.target.elements['old-password'].value,
+            'new-password': e.target.elements['new-password'].value,
+            'fullname': e.target.elements['fullname'].value
+          };
+          _context3.next = 5;
+          return fetch('/update/user', {
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            method: 'PATCH',
+            body: JSON.stringify(data)
+          });
+        case 5:
+          response = _context3.sent;
+          _context3.next = 8;
+          return response.json();
+        case 8:
+          json = _context3.sent;
+          if (json.error) {
+            createModalMessage({
+              flag: false,
+              title: 'Actualizar Usuario',
+              message: json.error
+            });
+            console.log(json.error);
+          } else {
+            createModalMessage({
+              flag: true,
+              title: 'Actualizar Usuario',
+              message: json.message
+            });
+          }
+        case 10:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3);
+  }));
+  return _updateUser.apply(this, arguments);
 }

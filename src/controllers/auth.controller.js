@@ -35,7 +35,7 @@ export const loginController = ((req, res) => {
 
                             req.session.userId = user.id
 
-                            req.session
+                            req.session.user = username
 
                             // asignando propiedas en res.session
                             // req.session.user_data = user
@@ -43,12 +43,15 @@ export const loginController = ((req, res) => {
 
                             // define una propiedad en cookie llamada user
                             //    res.cookie('user', user)
-                            return res.redirect('./home')
+
+
+                            console.log("llega aca");
+                            return res.redirect('/home')
                         }
                         else {
                             req.flash('info', [{ title: 'Autenticación', message: ['Usuario o contraseña incorrecta !'], status: "error" }])
 
-                            return res.status(401).redirect('./login')
+                            return res.status(401).redirect('/login')
                         }
 
 
@@ -61,7 +64,7 @@ export const loginController = ((req, res) => {
 
                 req.flash('info', [{ title: 'Autenticación', message: ['Usuario o contraseña incorrecta !'], status: "error" }])
 
-                return res.status(401).redirect('./login')
+                return res.status(401).redirect('/login')
             }
 
         })
@@ -105,6 +108,7 @@ export const registerController = (req, res) => {
                                     if (insertId) {
 
                                         req.session.userId = insertId
+                                        req.session.user = username
 
                                         req.flash('info', [{ title: 'Registro', message: ['Usuario Registrado !'], status: "success" }])
                                         res.redirect('/home')

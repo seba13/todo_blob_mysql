@@ -1,6 +1,6 @@
 
 include ../config/links.pug
-
+include ../mixins/timerLogout.pug
 
 .wrapper-nav
     .topbar
@@ -10,7 +10,7 @@ include ../config/links.pug
                 span 
                 span
                 span
-            li.topbar__menu__item: a.logo(href="#"): img(src="./img/fox.svg" alt="img logo")
+            li.topbar__menu__item: a.logo(href="/"): img(src="./img/fox.svg" alt="img logo")
 
         nav.nav.nav--hidden#nav
             ul.nav-menu
@@ -22,14 +22,15 @@ include ../config/links.pug
                         span #{link.name}
                 
             //- link.name
-            ul.nav-menu
+            ul.nav-menu#nav-menu-logout
                 if(!user)
                     each link in linksUser
                         li.nav-menu__item: a(href=link.url )
                             #{link.icon.tag}(icon=link.icon.icon) 
                             span #{link.name}  
-                else 
+                else
                     each link in logout
-                        li.nav-menu__item: a(href=link.url)
+                        li.nav-menu__item: a(href=link.url id= link.url== '/logout' ? 'logout' : '' )
                             #{link.icon.tag}(icon=link.icon.icon) 
                             span #{link.name}
+                    +setTimer()

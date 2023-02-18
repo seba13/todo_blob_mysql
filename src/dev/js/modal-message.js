@@ -17,6 +17,10 @@ if(modalMessage) {
 
 
 
+/**
+ * 
+ * @param {*} data  {flag: boolean, title: string, message: string}
+ */
 function createModalMessage(data){
 
     let modalMessage = document.createElement('div')
@@ -28,13 +32,29 @@ function createModalMessage(data){
     modalMessageTitle.textContent = data.title
 
 
-    let modalMessageDescription = document.createElement('p')
-    modalMessageDescription.classList.add('modal-message__message')
-    modalMessageDescription.textContent = data.message
-
-
     modalMessage.append(modalMessageTitle)
-    modalMessage.append(modalMessageDescription)
+
+    // En caso de que se reciba un array de errores listarlos en distintos parrafos
+    if(Array.isArray(data.message)){
+
+        data.message.forEach(message => {
+
+            let modalMessageDescription = document.createElement('p')
+            modalMessageDescription.classList.add('modal-message__message')
+            modalMessageDescription.textContent = message
+        
+            modalMessage.append(modalMessageDescription)
+
+        })
+    }else{
+        let modalMessageDescription = document.createElement('p')
+        modalMessageDescription.classList.add('modal-message__message')
+        modalMessageDescription.textContent = data.message
+    
+        modalMessage.append(modalMessageDescription)
+    }
+
+   
 
 
     document.body.append(modalMessage)

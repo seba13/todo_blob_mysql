@@ -10,14 +10,14 @@ const router = Router()
 
 
 
-router.get('/to-do', redirectIndex, renderTodo)
-router.post('/to-do/newtask', validateTask, NewTaskCtrl)
+router.get('/', redirectIndex, renderTodo)
+router.post('/newtask', validateTask, NewTaskCtrl)
 
-router.patch("/to-do/:idTask", validateTask, modifyTaskCtrl)
-router.patch("/to-do/:idTask/status", modifyStatusTaskCtrl)
+router.patch("/:idTask", validateTask, modifyTaskCtrl)
+router.patch("/:idTask/status", modifyStatusTaskCtrl)
 
-router.patch("/to-do/:idTask/order", modifyOrderTaskCtrl)
+router.patch("/:idTask/order", modifyOrderTaskCtrl)
 
-router.delete('/to-do/:idTask', eliminateTaskCtrl)
+router.delete('/:idTask', eliminateTaskCtrl)
 
 export default router

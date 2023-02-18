@@ -2,10 +2,11 @@
 
 
 import {Router} from 'express'
-import {renderHome, updateUserCtrl, getImgUser } from '../controllers/home.controller.js'
+import {renderHome, updateUserCtrl, updateImageUserCtrl, getImgUser } from '../controllers/home.controller.js'
 import {redirectIndex, middlewareMulter, errorUpload} from "../middlewares/home.middleware.js"
 
 import {validateUserDto} from '../utils/validations/validate-update-user-dto.js'
+import formidable from 'express-formidable'
 
 const router = Router()
 
@@ -14,7 +15,14 @@ const router = Router()
 router.get("/home",redirectIndex, renderHome)
 
 
-router.post('/update-user',redirectIndex,middlewareMulter, errorUpload, updateUserCtrl)
+
+
+router.patch('/update/image-user', redirectIndex, middlewareMulter,errorUpload, updateImageUserCtrl)
+
+
+// SE UTILIZA EL MIDDLEWARE DE MULTER PARA PARSEAR EL FORMDATA
+router.patch('/update/user', redirectIndex, validateUserDto,updateUserCtrl)
+
 
 
 
