@@ -83,7 +83,7 @@ dependencias de desarrollo:
     /**
      * dirname devuelve el directorio donde se encuentra un archivo 
      * join recibe como parametros cadenas y las une en una ruta de archivos válida
-    *+/
+    **/
     import {dirname, join} from "path";
     import { fileURLToPath } from "url";
 
