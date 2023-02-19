@@ -192,11 +192,21 @@ dependencias de desarrollo:
     app.set('view engine', "pug")
 
 
+    /**
+     *  connect-flash es un middleware para Express que permite almacenar mensajes temporales en la sesión del usuario.
+    **/ 
     import flash from 'connect-flash'
 
-
+    /**
+     *  usarlo en cualquier ruta
+    **/ 
     app.use(flash())
 
+    
+    /**
+     * app.locals 
+     * Es un objeto en Express que proporciona una manera de pasar datos a las vistas. Es un objeto que se usa para almacenar variables que están disponibles en toda la aplicación y se pueden acceder desde cualquier lugar de la aplicación. Estas variables se pueden usar para almacenar datos que se requieren en varias partes de la aplicación, como información de configuración, datos de autenticación, información del usuario, etc.
+    **/ 
     app.use( function middle(req, res, next) {
 
         app.locals.message = req.flash('info')
@@ -241,7 +251,70 @@ dependencias de desarrollo:
 
 
 
+# Principales configuraciones de mysql2
 
+```js
+    // ./src/config/db.js
+
+    /**
+     *  Importa mysql desde mysql2/promise
+     *  desde esta instancia mysql no es necesario usar Promise()
+    **/ 
+    import mysql from 'mysql2/promise'
+
+    const options = {
+        host: process.env.MYSQL_HOST,
+        database: process.env.DB_NAME,
+        user: process.env.MYSQL_USER ,
+        password: process.env.MYSQL_PASSWORD,
+        port: process.env.DB_PORT,
+        waitForConnections: true, //esperar por conexion
+        connectionLimit: 10, //maximo 10 conexiones
+        queueLimit: 0, //sin limite de cola 
+    }
+
+    export const pool = mysql.createPool(options)
+
+
+    /**
+     *  se establece la conexion y libera la conexion a la base de datos 
+    **/ 
+    pool.getConnection((err, connection) => {
+        if(err) {
+            if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+                console.error("conexion con base de datos ha sido cerrada");
+            }
+            if(err.code === "ER_CON_COUNT_ERROR") {
+                console.error("La base de datos tiene demasiadas conexiones");
+            }
+            if(err.code === 'ECONNREFUSED') {
+                console.error('Conexion con base de datos ha sido rechazada');
+            }
+        }
+
+        if (connection) connection.release();
+
+        return;
+    })
+
+    /**
+     *   Evento que se ejecuta cuando se libera una conexion
+    **/ 
+    pool.on('release', (connection) => {
+
+
+        console.log("conexion "+ connection.threadId + " liberada");
+
+    })
+    /** EJEMPLO DE CONEXION CON UNA QUERY 
+     * 
+     *  Internamente pool.query realiza consultas a la base de datos
+     * tomando conexion de un pool de conexiones
+     * cuando se llama a la funcion poo.query se realiza una solicitud de conexion desde el pool de conexiones, una vez obtenida la conexion se utiliza la conexion para ejecutar la consulta, esta conexion se libera automaticamente despues que es completada la consulta y se devuelve el resultado.
+    **/ 
+    const [rows, fields] = await pool.query('select * from users')
+
+```
 
 
 

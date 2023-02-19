@@ -9,6 +9,9 @@ import options from './keys.js'
 export const pool = mysql.createPool(options)
 
 pool.getConnection((err, connection) => {
+
+    console.log("entra en conexion");
+
     if(err) {
         if(err.code === 'PROTOCOL_CONNECTION_LOST') {
             console.error("conexion con base de datos ha sido cerrada");
@@ -29,6 +32,6 @@ pool.getConnection((err, connection) => {
 pool.on('release', (connection) => {
 
 
-    console.log("conexion "+ connection.threadId + " lanzada");
+    console.log("conexion "+ connection.threadId + " liberada");
 
 })
