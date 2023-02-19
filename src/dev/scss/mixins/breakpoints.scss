@@ -41,6 +41,15 @@ $extra-large: 1201px;
     }
 
 }
+
+@mixin desktop {
+
+    @media screen and (min-width: $desktop){
+        @content;
+    }
+
+}
+
 @mixin extra-large {
 
     @media screen and (min-width: $extra-large){

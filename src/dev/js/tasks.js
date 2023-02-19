@@ -53,7 +53,10 @@ let inputInfo = {
 
 Sortable.create(taskList, {
     handle: '.move-task',
-    animation: 150
+    animation: 250,
+    // swap: true,
+    // swapClass: 'highlight',
+    ghostClass: 'select-swap'
   });
 
 
@@ -102,7 +105,9 @@ function setTaskOrder(e){
         console.log(tasks);
 
         if(currentIndexTask !==  previousIndexTask) {
+            console.log("entra en if");
             if(e.type !== 'drop'){
+                console.log("droppppp!!");
                 tasks.pop()
             }
             updateOrderTasks(tasks)
@@ -232,7 +237,7 @@ function toggleOptionsModal(e) {
             // toggle para abrir y cerrar opciones
             taskListOptions.classList.toggle("task-list__options__btn--hidden")
 
-
+            console.log("Cambiando icon");
             e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true)
 
             e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true)
@@ -261,6 +266,8 @@ function toggleOptionsModal(e) {
             tasklistOptions.classList.add("task-list__options__btn--hidden")
 
 
+            console.log("cambiando icon 2");
+
             e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true)
 
             e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true)
@@ -283,6 +290,7 @@ function toggleOptionsModal(e) {
 
                 e.target.parentElement.nextElementSibling.classList.toggle("task-list__icon--hidden")
 
+                console.log("cambiando icon 3");
 
                 e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.removeAttribute('readonly')
 
@@ -296,12 +304,14 @@ function toggleOptionsModal(e) {
                 
 
                 // se procede a guardar
-
+                console.log("cambiando icon 4");
                 e.target.parentElement.classList.toggle("task-list__icon--hidden")
 
                 e.target.parentElement.previousElementSibling.classList.toggle("task-list__icon--hidden")
 
+                e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true)
 
+                e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true)
 
 
                 let nombre = e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild

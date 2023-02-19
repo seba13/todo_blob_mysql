@@ -16,7 +16,7 @@ const options = {
     password: process.env.MYSQL_PASSWORD,
     port: process.env.DB_PORT,
     waitForConnections: true,
-    connectionLimit: 10,
+    connectionLimit: 200,
     queueLimit: 0,
 }
 

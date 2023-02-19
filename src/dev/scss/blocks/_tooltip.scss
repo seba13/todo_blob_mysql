@@ -24,7 +24,7 @@
 
         @include tablet
         {
-            transform: translate(-50%) scale(1);
+            transform: translateX(-50%) scale(1);
         }
     }
 
@@ -37,7 +37,7 @@
         position: absolute;
         margin-top: 20px;
         left: 0%;
-        transform: translate(0) scale(0);
+        transform: translateX(0) scale(0);
         width: 250px;
         background-color: #182D3E;
         transition:  transform .25s ease;

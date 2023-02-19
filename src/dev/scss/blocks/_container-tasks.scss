@@ -1,6 +1,6 @@
 .container-tasks {
     width: round(90%);
-    max-width: 500px;
+    // max-width: 60%;
     margin-right: auto;
     margin-left: auto;
     height: calc(100vh - 170px);
@@ -31,7 +31,7 @@
             border: none;
             outline: none;
             border-radius: 12px;
-            color: rgba(242, 177, 46, 0.607);
+            color: rgb(242, 177, 46);
             cursor: pointer;
             // position: relative;
         }
@@ -143,6 +143,11 @@
                 border-radius: 15px;
                 background-color: transparent;
                 outline: none;
+
+                &:not([readonly]):focus
+                {
+                    background-color: hsla(240, 11%, 98%, 0.321);
+                }
             }
 
             width: 100%;
@@ -215,7 +220,7 @@
                             height: 50px;
                             position: fixed;
                             left: 50%;
-                            top: calc(74%);
+                            top: calc(74.8%);
                             display: flex;
                             justify-content: center;
                             align-items: center;
@@ -444,52 +449,61 @@
         display: none;
     }
 
-   @include laptop
-   {
-    .task-buttons {
-        display: block;
-        .button-left {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translate(-110%, -50%);
-
-            iconify-icon {
-                font-size: 60px;
-                color: #fff;
-                cursor: pointer;
-                transform: scale(1);
-                transition: transform .2s ease, opacity .2s ease;
-                opacity: .4;
-
-                &:hover {
-                    transform: scale(1.1);
-                    opacity: 1;
+    @include laptop
+    {
+        max-width: 80%;
+        .task-buttons {
+            display: block;
+            .button-left {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                transform: translate(-110%, -50%);
+    
+                iconify-icon {
+                    font-size: 60px;
+                    color: #fff;
+                    cursor: pointer;
+                    transform: scale(1);
+                    transition: transform .2s ease, opacity .2s ease;
+                    opacity: .4;
+    
+                    &:hover {
+                        transform: scale(1.1);
+                        opacity: 1;
+                    }
                 }
             }
-        }
-
-        .button-right {
-            position: absolute;
-            top: 50%;
-            right: 0;
-            transform: translate(110%, -50%);
-
-            iconify-icon {
-                font-size: 60px;
-                color: #fff;
-                cursor: pointer;
-                transform: scale(1);
-                transition: transform .2s ease, opacity .2s ease;
-                opacity: .4;
-
-                &:hover {
-                    transform: scale(1.1);
-                    opacity: 1;
+    
+            .button-right {
+                position: absolute;
+                top: 50%;
+                right: 0;
+                transform: translate(110%, -50%);
+    
+                iconify-icon {
+                    font-size: 60px;
+                    color: #fff;
+                    cursor: pointer;
+                    transform: scale(1);
+                    transition: transform .2s ease, opacity .2s ease;
+                    opacity: .4;
+    
+                    &:hover {
+                        transform: scale(1.1);
+                        opacity: 1;
+                    }
                 }
             }
         }
     }
+
+   @include desktop
+   {
+    // min-width: 500px;
+    max-width: 60%;
+
+   
    }
 
 }

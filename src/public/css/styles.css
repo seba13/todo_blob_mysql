@@ -1262,9 +1262,9 @@ input::placeholder {
 }
 @media screen and (min-width: 481px) {
   .tooltip:hover .tooltip__message {
-    -webkit-transform: translate(-50%) scale(1);
-        -ms-transform: translate(-50%) scale(1);
-            transform: translate(-50%) scale(1);
+    -webkit-transform: translateX(-50%) scale(1);
+        -ms-transform: translateX(-50%) scale(1);
+            transform: translateX(-50%) scale(1);
   }
 }
 .tooltip__message {
@@ -1273,9 +1273,9 @@ input::placeholder {
   position: absolute;
   margin-top: 20px;
   left: 0%;
-  -webkit-transform: translate(0) scale(0);
-      -ms-transform: translate(0) scale(0);
-          transform: translate(0) scale(0);
+  -webkit-transform: translateX(0) scale(0);
+      -ms-transform: translateX(0) scale(0);
+          transform: translateX(0) scale(0);
   width: 250px;
   background-color: #182D3E;
   -webkit-transition: -webkit-transform 0.25s ease;
@@ -1398,7 +1398,6 @@ input::placeholder {
 
 .container-tasks {
   width: 90%;
-  max-width: 500px;
   margin-right: auto;
   margin-left: auto;
   height: calc(100vh - 170px);
@@ -1430,7 +1429,7 @@ input::placeholder {
   border: none;
   outline: none;
   border-radius: 12px;
-  color: rgba(242, 177, 46, 0.607);
+  color: rgb(242, 177, 46);
   cursor: pointer;
 }
 .container-tasks .task__input-insert .task__form-insert {
@@ -1574,6 +1573,9 @@ input::placeholder {
   background-color: transparent;
   outline: none;
 }
+.container-tasks .task__wrapper .task-list input[type=text]:not([readonly]):focus {
+  background-color: hsla(240deg, 11%, 98%, 0.321);
+}
 @media screen and (min-width: 970px) {
   .container-tasks .task__wrapper .task-list {
     overflow-X: hidden;
@@ -1645,7 +1647,7 @@ input::placeholder {
   height: 50px;
   position: fixed;
   left: 50%;
-  top: 74%;
+  top: 74.8%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1881,6 +1883,9 @@ input::placeholder {
   display: none;
 }
 @media screen and (min-width: 970px) {
+  .container-tasks {
+    max-width: 80%;
+  }
   .container-tasks .task-buttons {
     display: block;
   }
@@ -1938,4 +1943,19 @@ input::placeholder {
             transform: scale(1.1);
     opacity: 1;
   }
+}
+@media screen and (min-width: 1025px) {
+  .container-tasks {
+    max-width: 60%;
+  }
+}
+
+.select-swap {
+  background-color: hsla(201deg, 100%, 36%, 0.406);
+}
+
+.highlight {
+  -webkit-transition: background-color 0.25s ease;
+  transition: background-color 0.25s ease;
+  background-color: rgba(219, 217, 217, 0.41);
 }

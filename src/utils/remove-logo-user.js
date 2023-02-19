@@ -63,10 +63,11 @@ export async function optimizeImg(filePath) {
         if(extname(filePath) === '.gif'){
             resizedImage = await sharp(buffer, {animated: true})
             .gif({
-                colors: 64,
+                animated: true,
+                // colors: 64,
                 loop: 0,
-                lossy: true,
-                quality: 75
+                lossy: false,
+                quality: 100
             })
             .resize({width: 150, height: 150, fit: 'cover', position: 'top'})
             .toBuffer();

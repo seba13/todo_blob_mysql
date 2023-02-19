@@ -53,7 +53,10 @@ var inputInfo = {
 };
 Sortable.create(taskList, {
   handle: '.move-task',
-  animation: 150
+  animation: 250,
+  // swap: true,
+  // swapClass: 'highlight',
+  ghostClass: 'select-swap'
 });
 taskList.addEventListener('pointerdown', function (e) {
   var selectedTask = e.target.closest('.task-list__wrapper');
@@ -81,7 +84,9 @@ function setTaskOrder(e) {
   console.log(previousIndexTask);
   console.log(tasks);
   if (currentIndexTask !== previousIndexTask) {
+    console.log("entra en if");
     if (e.type !== 'drop') {
+      console.log("droppppp!!");
       tasks.pop();
     }
     updateOrderTasks(tasks);
@@ -172,6 +177,7 @@ function toggleOptionsModal(e) {
 
     // toggle para abrir y cerrar opciones
     taskListOptions.classList.toggle("task-list__options__btn--hidden");
+    console.log("Cambiando icon");
     e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true);
     e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true);
     var iconSave = e.target.closest(".task-list__options").querySelector("[icon='material-symbols:save-as']").parentElement;
@@ -187,6 +193,7 @@ function toggleOptionsModal(e) {
     }
     var tasklistOptions = btnClose.parentElement;
     tasklistOptions.classList.add("task-list__options__btn--hidden");
+    console.log("cambiando icon 2");
     e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true);
     e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true);
     var _iconSave = e.target.closest(".task-list__options").querySelector("[icon='material-symbols:save-as']").parentElement;
@@ -197,14 +204,17 @@ function toggleOptionsModal(e) {
     if (e.target.getAttribute('icon') === "material-symbols:edit-document") {
       e.target.parentElement.classList.toggle("task-list__icon--hidden");
       e.target.parentElement.nextElementSibling.classList.toggle("task-list__icon--hidden");
+      console.log("cambiando icon 3");
       e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.removeAttribute('readonly');
       e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.removeAttribute('readonly');
       e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.focus();
     } else {
       // se procede a guardar
-
+      console.log("cambiando icon 4");
       e.target.parentElement.classList.toggle("task-list__icon--hidden");
       e.target.parentElement.previousElementSibling.classList.toggle("task-list__icon--hidden");
+      e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true);
+      e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true);
       var nombre = e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild;
       var descripcion = e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild;
       var idTask = e.target.closest(".task-list__wrapper").dataset.id;

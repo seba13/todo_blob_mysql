@@ -8,6 +8,8 @@ import options from './keys.js'
 
 export const pool = mysql.createPool(options)
 
+
+
 pool.getConnection((err, connection) => {
 
     console.log("entra en conexion");
