@@ -316,40 +316,14 @@ dependencias de desarrollo:
 
 ```
 
+--- 
+<br>
+<br>
+<br>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Imágenes Aplicación
+<br>
 
 ![imagen index](https://i.ibb.co/WtY0z7z/index.png "Index to-do")
 
