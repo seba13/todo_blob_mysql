@@ -90,6 +90,13 @@
         
                     }
                 }
+                .logo
+                {
+                   img
+                   {
+                        transform: translate(-50%);
+                   }
+                }
             }
 
         }
@@ -195,10 +202,15 @@
 
                     .logo
                     {
+                        
+                        // margin-left: -3.5rem;
+                        margin-left: calc((-100vw/20));
+
                         img
                         {
+                            transform: translate(0);
                             min-width: 90px;
-                            width: 120px;
+                            width: 90px;
                         }
                     }
                 }
@@ -235,13 +247,13 @@
                     &:first-child
                     {
                         margin-top: 0;
-                        padding-left: 40px;
+                        padding-left: 20px;
                         justify-content: flex-start;
                     }
                     &:last-child
                     {
                         padding-bottom: 0;
-                        padding-right: 40px;
+                        padding-right: 10px;
                         justify-content: flex-end;
 
                     }
@@ -251,7 +263,7 @@
                     {
                         margin-bottom: 0;
                         margin-right: 20px;
-
+                        
                         &:hover a
                         {
                             background-color: #fff;
@@ -266,12 +278,13 @@
                         
                         a
                         {
+                            height: 60px;
                             font-size: 1rem;
                             font-weight: bold;
                             color: #EBEAEF;
                             border-radius: 1rem;
                             background-color: #383838;
-                            padding: 1rem;
+                            padding: 0 1rem;
                             align-items: center;
                             display: flex;
                             transition: background-color .3s ease, color .3s ease;
@@ -291,10 +304,8 @@
 
                         &--timer
                         {
-                            a
-                            {
-                                padding: .6rem;
-                            }
+                            margin: 0;
+                           
                         
                         }
 
@@ -305,4 +316,58 @@
         }
     }
 
+}
+
+@include desktop
+{
+   
+    .wrapper-nav
+    {
+        .topbar
+        {
+            &__menu
+            {
+                &__item
+                {
+                    .logo
+                    {
+                         margin-left: calc((-100vw/20) );
+                        // margin-left: -3.5rem;
+                        margin-left: 0;
+                    }
+                    
+                }
+            }
+            .nav
+            {
+ 
+                &-menu
+                {   
+                   
+                    &:first-child
+                    {
+                        margin-top: 0;
+                        padding-left: 20px;
+                    }
+                    &:last-child
+                    {
+                        padding-left: 100px;
+                        padding-bottom: 0;
+                        padding-right: 20px;
+                    }
+
+                    &__item
+                    {
+                        &--timer
+                        {
+                            margin: 0;
+                           
+                        
+                        }
+                    }
+
+                }
+            }
+        }
+    }
 }

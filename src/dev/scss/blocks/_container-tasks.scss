@@ -140,13 +140,13 @@
             input[type="text"]
             {
                 border: none;
-                border-radius: 15px;
+                // border-radius: 15px;
                 background-color: transparent;
                 outline: none;
 
                 &:not([readonly]):focus
                 {
-                    background-color: hsla(240, 11%, 98%, 0.321);
+                    background-color: hsla(240, 9%, 98%, 0.202);
                 }
             }
 
@@ -452,6 +452,7 @@
     @include laptop
     {
         max-width: 80%;
+        min-width: 845px;
         .task-buttons {
             display: block;
             .button-left {
