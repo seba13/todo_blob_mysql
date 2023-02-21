@@ -51,28 +51,118 @@ var inputInfo = {
     return countPending;
   }
 };
+var treshhold = taskList.clientWidth / 3;
+var coordsTaskList = taskList.getBoundingClientRect();
+var coordLeft = treshhold + coordsTaskList.left;
+var coordRight = coordsTaskList.right;
+var intervalSlide = null;
+var isSliding = false;
+var pressed = false;
 Sortable.create(taskList, {
   handle: '.move-task',
   animation: 250,
-  // swap: true,
-  // swapClass: 'highlight',
-  ghostClass: 'select-swap'
+  forceFallback: true,
+  // scroll: true,
+  // bubbleScroll: true,
+  swap: true,
+  swapClass: 'highlight',
+  ghostClass: 'select-swap',
+  onSort: function onSort(e) {
+    // e.target => tasklist
+    updateOrderTasks(_toConsumableArray(e.target.children));
+  }
 });
-taskList.addEventListener('pointerdown', function (e) {
-  var selectedTask = e.target.closest('.task-list__wrapper');
-  var tasks = _toConsumableArray(document.querySelectorAll('.task-list__wrapper'));
-  previousIndexTask = tasks.indexOf(selectedTask);
-  console.log("pointer down!!!!!");
-});
+document.addEventListener('pointerdown', startSlide);
+// document.addEventListener('pointermove', slidepage)
+document.addEventListener('pointerup', endSlide);
+function startSlide(e) {
+  if (e.target.getAttribute('icon') === 'mdi:cursor-move') {
+    pressed = true;
+    document.addEventListener('pointermove', slidePage);
+  }
+}
+function slidePage(e) {
+  if (!isSliding && pressed) {
+    isSliding = true;
+    if (e.clientX <= coordLeft) {
+      console.log("desplzar izquierda");
+      taskList.scrollBy({
+        left: -taskList.clientWidth,
+        behavior: "smooth"
+      });
+    }
+    if (e.clientX >= coordRight) {
+      console.log("Desplzazar derecha");
+      taskList.scrollBy({
+        left: taskList.clientWidth,
+        behavior: "smooth"
+      });
+    }
+    setTimeout(function () {
+      isSliding = false;
+    }, 700);
+  }
+}
+
+// function slidepage(e) {
+//     console.log({coordLeft});
+//     console.log(e);
+//     if (pressed) {
+//         if (!isSliding) {
+//             isSliding = true
+
+//             // se utiliza el timeout para reducir las llamadas del evento pointermove
+//             setTimeout(() => {
+//                 if (e.clientX <= coordLeft) {
+//                     console.log("desplzar izquierda");
+//                     taskList.scrollBy({
+//                         left: - taskList.clientWidth,
+//                         behavior: "smooth",
+//                     })
+//                 }
+//                 if (e.clientX >= coordRight) {
+//                     console.log("Desplzazar derecha");
+//                     taskList.scrollBy({
+//                         left: taskList.clientWidth,
+//                         behavior: "smooth",
+//                     })
+//                 }
+//                 isSliding = false
+//             }, 300);
+
+//         }
+//     } else {
+//         console.log("no entra");
+//     }
+// }
+
+function endSlide(e) {
+  if (pressed) {
+    pressed = false;
+    clearInterval(intervalSlide);
+  }
+}
+
+// taskList.addEventListener('pointerdown', (e) => {
+
+//         let selectedTask = e.target.closest('.task-list__wrapper')
+//         let tasks = [...document.querySelectorAll('.task-list__wrapper')]
+
+//         previousIndexTask = tasks.indexOf(selectedTask)
+//         console.log("pointer down!!!!!");
+
+// })
 
 // en mobile no se activa el evento drop
 
 // por lo que para desktop funciona el evento drop
 // y en mobile funciona el evento pointerup
 
-taskList.addEventListener('pointerup', setTaskOrder);
+// **************** UTILIZANDO EVENTO DE SORTABLE ONSORT 
+
+// taskList.addEventListener('pointerup', setTaskOrder)
 // taskList.addEventListener('pointermove', e => e.preventDefault())
-taskList.addEventListener('drop', setTaskOrder);
+// taskList.addEventListener('drop', setTaskOrder)
 function setTaskOrder(e) {
   console.log("drop or pointerup");
   console.log(e);

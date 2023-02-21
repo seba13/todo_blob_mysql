@@ -3,7 +3,7 @@ let checkboxInputs = containerTask.querySelectorAll("input[type='checkbox']")
 let taskList = document.getElementById("task-list")
 let taskDock = document.getElementById("task-dock")
 let pages = 0;
-let tasksDone = document.getElementById('tasks-done') 
+let tasksDone = document.getElementById('tasks-done')
 let taskPending = document.getElementById("tasks-pending")
 
 let buttonLeft = document.getElementById("button-left")
@@ -24,25 +24,25 @@ let previousIndexTask = 0;
 let inputInfo = {
 
     total: checkboxInputs.length,
-    
-    getInputDone(){
-        let countDone = 0 
+
+    getInputDone() {
+        let countDone = 0
         checkboxInputs = containerTask.querySelectorAll("input[type='checkbox']")
         checkboxInputs.forEach(input => {
 
-            if(input.checked == true){
+            if (input.checked == true) {
                 countDone++
             }
         })
-    
+
         return countDone;
     },
-    getInputPending(){
-        let countPending = 0 
+    getInputPending() {
+        let countPending = 0
         checkboxInputs = containerTask.querySelectorAll("input[type='checkbox']")
         checkboxInputs.forEach(input => {
-    
-            if(! input.checked == true){
+
+            if (!input.checked == true) {
                 countPending++
             }
         })
@@ -51,27 +51,140 @@ let inputInfo = {
 }
 
 
+let treshhold = taskList.clientWidth / 3
+let coordsTaskList = taskList.getBoundingClientRect()
+let coordLeft = treshhold + coordsTaskList.left
+let coordRight = coordsTaskList.right
+
+let intervalSlide = null
+let isSliding = false
+let pressed = false
+
+
 Sortable.create(taskList, {
     handle: '.move-task',
     animation: 250,
-    // swap: true,
-    // swapClass: 'highlight',
-    ghostClass: 'select-swap'
-  });
+    forceFallback: true,
+    // scroll: true,
+    // bubbleScroll: true,
+    swap: true,
+    swapClass: 'highlight',
+    ghostClass: 'select-swap',
+    onSort: function (e) {
+
+        // e.target => tasklist
+        updateOrderTasks([...e.target.children])
+    }
+
+});
+
+document.addEventListener('pointerdown', startSlide)
+// document.addEventListener('pointermove', slidepage)
+document.addEventListener('pointerup', endSlide)
+
+function startSlide(e) {
+
+    if (e.target.getAttribute('icon') === 'mdi:cursor-move') {
+        pressed = true
+
+
+        document.addEventListener('pointermove', slidePage)
+
+    }
+
+}
+
+function slidePage(e) {
+
+    if (!isSliding && pressed) {
+
+        isSliding = true
+
+        if (e.clientX <= coordLeft) {
+            console.log("desplzar izquierda");
+            taskList.scrollBy({
+                left: - taskList.clientWidth,
+                behavior: "smooth",
+            })
+        }
+        if (e.clientX >= coordRight) {
+            console.log("Desplzazar derecha");
+            taskList.scrollBy({
+                left: taskList.clientWidth,
+                behavior: "smooth",
+            })
+        }
+
+        setTimeout(() => {
+            isSliding = false
+        }, 700)
+
+    }
+
+
+}
 
 
 
-taskList.addEventListener('pointerdown', (e) => {
 
-   
-    
-        let selectedTask = e.target.closest('.task-list__wrapper')
-        let tasks = [...document.querySelectorAll('.task-list__wrapper')]
 
-        previousIndexTask = tasks.indexOf(selectedTask)
-        console.log("pointer down!!!!!");
-    
-})
+
+// function slidepage(e) {
+//     console.log({coordLeft});
+//     console.log(e);
+//     if (pressed) {
+//         if (!isSliding) {
+//             isSliding = true
+
+//             // se utiliza el timeout para reducir las llamadas del evento pointermove
+//             setTimeout(() => {
+//                 if (e.clientX <= coordLeft) {
+//                     console.log("desplzar izquierda");
+//                     taskList.scrollBy({
+//                         left: - taskList.clientWidth,
+//                         behavior: "smooth",
+//                     })
+//                 }
+//                 if (e.clientX >= coordRight) {
+//                     console.log("Desplzazar derecha");
+//                     taskList.scrollBy({
+//                         left: taskList.clientWidth,
+//                         behavior: "smooth",
+//                     })
+//                 }
+//                 isSliding = false
+//             }, 300);
+
+//         }
+//     } else {
+//         console.log("no entra");
+//     }
+// }
+
+function endSlide(e) {
+
+    if (pressed) {
+        pressed = false
+        clearInterval(intervalSlide)
+    }
+
+}
+
+
+
+
+
+// taskList.addEventListener('pointerdown', (e) => {
+
+
+
+//         let selectedTask = e.target.closest('.task-list__wrapper')
+//         let tasks = [...document.querySelectorAll('.task-list__wrapper')]
+
+//         previousIndexTask = tasks.indexOf(selectedTask)
+//         console.log("pointer down!!!!!");
+
+// })
 
 
 // en mobile no se activa el evento drop
@@ -79,48 +192,50 @@ taskList.addEventListener('pointerdown', (e) => {
 // por lo que para desktop funciona el evento drop
 // y en mobile funciona el evento pointerup
 
-  
-taskList.addEventListener('pointerup', setTaskOrder)
+
+
+
+// **************** UTILIZANDO EVENTO DE SORTABLE ONSORT 
+
+// taskList.addEventListener('pointerup', setTaskOrder)
 // taskList.addEventListener('pointermove', e => e.preventDefault())
-taskList.addEventListener('drop', setTaskOrder)
+// taskList.addEventListener('drop', setTaskOrder)
+function setTaskOrder(e) {
+
+    console.log("drop or pointerup");
+    console.log(e);
+
+    let currentTask = e.target.closest('.task-list__wrapper')
+    let tasks = [...document.querySelectorAll('.task-list__wrapper')]
+
+    let currentIndexTask = tasks.indexOf(currentTask)
 
 
-function setTaskOrder(e){
-   
-        console.log("drop or pointerup");
-        console.log(e);
-   
-        let currentTask = e.target.closest('.task-list__wrapper')
-        let tasks = [...document.querySelectorAll('.task-list__wrapper')]
-
-        let currentIndexTask = tasks.indexOf(currentTask)
-
-        
-        console.log("pointerup!!!!");
+    console.log("pointerup!!!!");
 
 
-        console.log(currentIndexTask);
-        console.log(previousIndexTask);
+    console.log(currentIndexTask);
+    console.log(previousIndexTask);
 
-        console.log(tasks);
+    console.log(tasks);
 
-        if(currentIndexTask !==  previousIndexTask) {
-            console.log("entra en if");
-            if(e.type !== 'drop'){
-                console.log("droppppp!!");
-                tasks.pop()
-            }
-            updateOrderTasks(tasks)
-        }else{
-            console.log("no entra");
+    if (currentIndexTask !== previousIndexTask) {
+        console.log("entra en if");
+        if (e.type !== 'drop') {
+            console.log("droppppp!!");
+            tasks.pop()
         }
-    
+        updateOrderTasks(tasks)
+    } else {
+        console.log("no entra");
+    }
+
 
     //     console.log(currentIndexTask);
     //     console.log(previousIndexTask);
 
     //     updateOrderTasks(tasks.slice(currentIndexTask, previousIndexTask), currentIndexTask);
-      
+
 
     // }else
     // {
@@ -130,13 +245,18 @@ function setTaskOrder(e){
 
 }
 
+
+
+
+
+
 /**
  * 
  * @param {*} el  elemento de dom
  * al utilizar motor de plantillas el contenido se genera dinamicamente
  * por lo que el evento load no se activa automaticamente
  */
-function dispatchEvent(el){
+function dispatchEvent(el) {
 
     console.log("despachando evento");
     el.dispatchEvent(new Event('load'))
@@ -183,7 +303,7 @@ taskDock.addEventListener("click", movePageAt)
 
 
 // agregar bottones para scrollear
-buttonLeft.addEventListener("click", ()=> {
+buttonLeft.addEventListener("click", () => {
     taskList.scrollBy({
         top: 0,
         left: -10,
@@ -191,7 +311,7 @@ buttonLeft.addEventListener("click", ()=> {
     })
 })
 
-buttonRight.addEventListener("click", ()=> {
+buttonRight.addEventListener("click", () => {
     taskList.scrollBy({
         top: 0,
         left: 10,
@@ -204,9 +324,9 @@ buttonRight.addEventListener("click", ()=> {
 function modalNewTask(e) {
 
 
-    if(e.target.classList.contains("new-task") || e.target.getAttribute('icon')){
+    if (e.target.classList.contains("new-task") || e.target.getAttribute('icon')) {
 
-        if(modalForm){
+        if (modalForm) {
 
             modalForm.classList.toggle('task__form-insert--hidden')
         }
@@ -217,47 +337,46 @@ function modalNewTask(e) {
 
 
 function toggleOptionsModal(e) {
-   
-        // btn para abrir/cerrar modal
-        if(e.target.closest('[icon="fluent:options-20-filled"] ')){
-    
-            
-            let taskListOptions = e.target.nextElementSibling
-            
-            // previniendo que se abra mas de un modal
-            // capturando todos los elementos que si estan visibles
-            // se les agrega la clase hidden para ocultarlos
-            // solo se le quita al elemento que se ha hecho click
-            containerTask.querySelectorAll('.task-list__options__btn:not(.task-list__options__btn--hidden)').forEach(taskOptionsEl => {
 
-                taskOptionsEl.classList.add("task-list__options__btn--hidden")
-    
-            })
-
-            // toggle para abrir y cerrar opciones
-            taskListOptions.classList.toggle("task-list__options__btn--hidden")
-
-            console.log("Cambiando icon");
-            e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true)
-
-            e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true)
-
-            let iconSave = e.target.closest(".task-list__options").querySelector("[icon='material-symbols:save-as']").parentElement
-            iconSave.classList.add("task-list__icon--hidden")
-            
-            let iconEdit = e.target.closest(".task-list__options").querySelector("[icon='material-symbols:edit-document']").parentElement
-            iconEdit.classList.remove("task-list__icon--hidden")
+    // btn para abrir/cerrar modal
+    if (e.target.closest('[icon="fluent:options-20-filled"] ')) {
 
 
-        }else
-        if(e.target.closest('.task-list__icon--close') ){
-            
+        let taskListOptions = e.target.nextElementSibling
+
+        // previniendo que se abra mas de un modal
+        // capturando todos los elementos que si estan visibles
+        // se les agrega la clase hidden para ocultarlos
+        // solo se le quita al elemento que se ha hecho click
+        containerTask.querySelectorAll('.task-list__options__btn:not(.task-list__options__btn--hidden)').forEach(taskOptionsEl => {
+
+            taskOptionsEl.classList.add("task-list__options__btn--hidden")
+
+        })
+
+        // toggle para abrir y cerrar opciones
+        taskListOptions.classList.toggle("task-list__options__btn--hidden")
+
+        console.log("Cambiando icon");
+        e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true)
+
+        e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true)
+
+        let iconSave = e.target.closest(".task-list__options").querySelector("[icon='material-symbols:save-as']").parentElement
+        iconSave.classList.add("task-list__icon--hidden")
+
+        let iconEdit = e.target.closest(".task-list__options").querySelector("[icon='material-symbols:edit-document']").parentElement
+        iconEdit.classList.remove("task-list__icon--hidden")
+
+
+    } else
+        if (e.target.closest('.task-list__icon--close')) {
+
             let btnClose = null
 
-            if(e.target.classList.contains("task-list__icon--close")){
-                 btnClose = e.target
-            }else
-            {
+            if (e.target.classList.contains("task-list__icon--close")) {
+                btnClose = e.target
+            } else {
                 btnClose = e.target.parentElement
             }
 
@@ -281,65 +400,63 @@ function toggleOptionsModal(e) {
 
 
         }
-        else 
-        if(e.target.getAttribute('icon') === 'material-symbols:edit-document' || e.target.getAttribute("icon") === "material-symbols:save-as"){
+        else
+            if (e.target.getAttribute('icon') === 'material-symbols:edit-document' || e.target.getAttribute("icon") === "material-symbols:save-as") {
 
-            if(e.target.getAttribute('icon') ==="material-symbols:edit-document"){
+                if (e.target.getAttribute('icon') === "material-symbols:edit-document") {
 
-                e.target.parentElement.classList.toggle("task-list__icon--hidden")
+                    e.target.parentElement.classList.toggle("task-list__icon--hidden")
 
-                e.target.parentElement.nextElementSibling.classList.toggle("task-list__icon--hidden")
+                    e.target.parentElement.nextElementSibling.classList.toggle("task-list__icon--hidden")
 
-                console.log("cambiando icon 3");
+                    console.log("cambiando icon 3");
 
-                e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.removeAttribute('readonly')
+                    e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.removeAttribute('readonly')
 
-                e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.removeAttribute('readonly')
+                    e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.removeAttribute('readonly')
 
-                e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.focus()
-                
-            }else
-            {
+                    e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.focus()
 
-                
-
-                // se procede a guardar
-                console.log("cambiando icon 4");
-                e.target.parentElement.classList.toggle("task-list__icon--hidden")
-
-                e.target.parentElement.previousElementSibling.classList.toggle("task-list__icon--hidden")
-
-                e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true)
-
-                e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true)
+                } else {
 
 
-                let nombre = e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild
 
-                let descripcion = e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild
+                    // se procede a guardar
+                    console.log("cambiando icon 4");
+                    e.target.parentElement.classList.toggle("task-list__icon--hidden")
 
-                let idTask = e.target.closest(".task-list__wrapper").dataset.id
+                    e.target.parentElement.previousElementSibling.classList.toggle("task-list__icon--hidden")
+
+                    e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true)
+
+                    e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true)
 
 
-                saveTask(nombre.value, descripcion.value, idTask)
-                
+                    let nombre = e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild
 
-               
+                    let descripcion = e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild
+
+                    let idTask = e.target.closest(".task-list__wrapper").dataset.id
+
+
+                    saveTask(nombre.value, descripcion.value, idTask)
+
+
+
+
+                }
 
             }
+            else
+                if (e.target.getAttribute('icon') === 'material-symbols:delete-forever-rounded') {
+                    // Eliminando ...
 
-        }
-        else
-        if(e.target.getAttribute('icon') === 'material-symbols:delete-forever-rounded')
-        {
-            // Eliminando ...
+                    let idTask = e.target.closest(".task-list__wrapper").dataset.id
 
-            let idTask = e.target.closest(".task-list__wrapper").dataset.id
+                    deleteTask(idTask)
 
-            deleteTask(idTask)
+                }
 
-        }
-    
 }
 
 
@@ -349,20 +466,20 @@ function toggleOptionsModal(e) {
 
 function updateStatus(e) {
 
- 
+
     checkboxInputs = containerTask.querySelectorAll("input[type='checkbox']")
 
-    if(e.target.getAttribute('type') == 'checkbox'){
-        
+    if (e.target.getAttribute('type') == 'checkbox') {
+
 
         let spanText = e.target.parentElement.lastElementChild
 
 
         // Modifica el dom
-        updateTasksList({op: 'update', spanText, checkbox: e.target})
+        updateTasksList({ op: 'update', spanText, checkbox: e.target })
         // modifca bd
         saveStatus(e.target.getAttribute('id'), e.target.checked)
-        
+
     }
 
 }
@@ -379,9 +496,9 @@ function addNewTask(e) {
     let inputTitle = document.getElementById('title-task')
     let inputDescription = document.getElementById('description-task')
 
-        
+
     // /to-do/newtask
-    
+
     let data = {
         nombre: inputTitle.value,
         descripcion: inputDescription.value,
@@ -396,18 +513,18 @@ function addNewTask(e) {
         body: JSON.stringify(data),
 
     })
-    .then(res => {
+        .then(res => {
 
-        if(res.ok) return res.json()
-        else throw new Error('Error al agregar Tarea');
-    })
-    .then(json => {
+            if (res.ok) return res.json()
+            else throw new Error('Error al agregar Tarea');
+        })
+        .then(json => {
 
-        updateTasksList({op: 'append', ...json})
-    })
-    .catch(err => {
-        createModalMessage({flag: false, title: "Nueva Tarea", message: err.message})
-    })
+            updateTasksList({ op: 'append', ...json })
+        })
+        .catch(err => {
+            createModalMessage({ flag: false, title: "Nueva Tarea", message: err.message })
+        })
 
     inputTitle.value = ""
     inputDescription.value = ""
@@ -417,7 +534,7 @@ function addNewTask(e) {
 function saveTask(nombre, descripcion, idTask) {
 
 
-    let data = {nombre: nombre, descripcion: descripcion, idTask: idTask}
+    let data = { nombre: nombre, descripcion: descripcion, idTask: idTask }
 
 
     fetch(`/to-do/${data.idTask}/`, {
@@ -429,16 +546,15 @@ function saveTask(nombre, descripcion, idTask) {
         body: JSON.stringify(data),
 
     })
-    .then(res => {
-        if(res.ok) {
-            createModalMessage({flag: true, title: "Actualizar tarea", message: "Tarea actualizada con éxito"})
-        }else 
-        {
-            throw new Error('Error al actualizar tarea')
-        }
-    }).catch(err => {
-        createModalMessage({flag: false, title: "Actualizar Tarea", message: err.message})
-    })
+        .then(res => {
+            if (res.ok) {
+                createModalMessage({ flag: true, title: "Actualizar tarea", message: "Tarea actualizada con éxito" })
+            } else {
+                throw new Error('Error al actualizar tarea')
+            }
+        }).catch(err => {
+            createModalMessage({ flag: false, title: "Actualizar Tarea", message: err.message })
+        })
 
 
 }
@@ -446,9 +562,9 @@ function saveTask(nombre, descripcion, idTask) {
 
 function saveStatus(id, status) {
 
-    let estado = status ? 1 : 0 
+    let estado = status ? 1 : 0
 
-    let data = {idTask: id, estado: estado}
+    let data = { idTask: id, estado: estado }
 
 
     fetch(`/to-do/${data.idTask}/status`, {
@@ -460,17 +576,17 @@ function saveStatus(id, status) {
         body: JSON.stringify(data),
 
     })
-    .then(res => {
-        if(res.ok) {
-            createModalMessage({flag: true, title: "Actualizar tarea", message: "Estado de tarea Actualizado con Éxito"})
-        }else{
-            throw new Error('Error al actualizar Tarea')
-        }
-    })
-    .catch(err => {
-        createModalMessage({flag: false, title: "Actualizar tarea", message: err.message})
-    })
-   
+        .then(res => {
+            if (res.ok) {
+                createModalMessage({ flag: true, title: "Actualizar tarea", message: "Estado de tarea Actualizado con Éxito" })
+            } else {
+                throw new Error('Error al actualizar Tarea')
+            }
+        })
+        .catch(err => {
+            createModalMessage({ flag: false, title: "Actualizar tarea", message: err.message })
+        })
+
 
 
 }
@@ -478,8 +594,8 @@ function saveStatus(id, status) {
 
 function deleteTask(idTask) {
 
-    let data = {idTask}
-    
+    let data = { idTask }
+
     fetch(`/to-do/${data.idTask}/`, {
 
         headers: {
@@ -489,17 +605,16 @@ function deleteTask(idTask) {
         body: JSON.stringify(data),
 
     })
-    .then(res => {
-        if (res.ok) {
-            updateTasksList({...data, op: 'delete'})
-        }else
-        {
-            throw new Error('Error al eliminar tarea')
-        }
-    })
-    .catch(err => {
-        createModalMessage({flag: false, title: "Eliminar tarea", message: err.message})
-    })
+        .then(res => {
+            if (res.ok) {
+                updateTasksList({ ...data, op: 'delete' })
+            } else {
+                throw new Error('Error al eliminar tarea')
+            }
+        })
+        .catch(err => {
+            createModalMessage({ flag: false, title: "Eliminar tarea", message: err.message })
+        })
 
 }
 
@@ -507,29 +622,29 @@ function deleteTask(idTask) {
 
 function updateTasksList(data) {
 
-    if(data.op === 'append') {
+    if (data.op === 'append') {
         taskList.append(createTask(data))
-        createModalMessage({flag: true, title: "Agregar Tarea", message: "Tarea Creada con Éxito"})
+        createModalMessage({ flag: true, title: "Agregar Tarea", message: "Tarea Creada con Éxito" })
     }
-    if(data.op === 'delete') {
+    if (data.op === 'delete') {
 
-        createModalMessage({flag: true, title: "Eliminar tarea", message: "Tarea Eliminada con Éxito"})
+        createModalMessage({ flag: true, title: "Eliminar tarea", message: "Tarea Eliminada con Éxito" })
         let wrapperTask = document.querySelector(` .task-list__wrapper[data-id='${data.idTask}']`)
         wrapperTask.classList.add('task-list__wrapper--hidden')
-        
+
         wrapperTask.addEventListener('transitionend', e => {
             wrapperTask.remove()
         })
     }
 
-    if(data.op === 'update') {
+    if (data.op === 'update') {
 
         updateTextStatus(data.spanText, data.checkbox)
 
 
     }
 
-    
+
     updateTasksDone()
     updateTasksPending()
     createDockPage()
@@ -582,7 +697,7 @@ function createTask(data) {
 
     let iconOpenOptions = document.createElement("iconify-icon")
     iconOpenOptions.setAttribute('icon', 'fluent:options-20-filled')
-    
+
     taskListOptions.append(iconMove)
     taskListOptions.append(iconOpenOptions)
 
@@ -590,7 +705,7 @@ function createTask(data) {
 
     //Contenedor Botones de opciones
     let taskListOptionsButtons = document.createElement("div")
-    taskListOptionsButtons.classList.add("task-list__options__btn","task-list__options__btn--hidden")
+    taskListOptionsButtons.classList.add("task-list__options__btn", "task-list__options__btn--hidden")
 
     let divCloseOptions = document.createElement("div")
     divCloseOptions.classList.add("task-list__icon--close")
@@ -599,7 +714,7 @@ function createTask(data) {
     iconCloseOptions.classList.add("btn__close-options")
     iconCloseOptions.setAttribute("icon", "material-symbols:close")
 
-    
+
     divCloseOptions.append(iconCloseOptions)
     taskListOptionsButtons.append(divCloseOptions)
 
@@ -645,14 +760,14 @@ function createTask(data) {
     let checkboxWrapper = document.createElement("div")
     checkboxWrapper.classList.add("checkbox-wrapper")
 
-    
+
     divCheckBox.appendChild(checkboxWrapper)
-    
+
     let inputCheckbox = document.createElement("input")
     inputCheckbox.setAttribute("type", "checkbox")
     inputCheckbox.setAttribute("id", data.idTask)
-    inputCheckbox.checked = data.estado ? true: false
-    inputCheckbox.value='done'
+    inputCheckbox.checked = data.estado ? true : false
+    inputCheckbox.value = 'done'
 
     let labelCheckbox = document.createElement("label")
     labelCheckbox.setAttribute("for", data.idTask)
@@ -661,7 +776,7 @@ function createTask(data) {
     spanButtonCheckbox.classList.add("circle")
 
     let spanText = document.createElement("span")
- 
+
     spanText.textContent = inputCheckbox.checked ? 'Realizado' : 'Pendiente'
 
     labelCheckbox.append(spanButtonCheckbox)
@@ -697,24 +812,23 @@ function createTask(data) {
 
 function updateTextStatus(span, checkbox) {
 
-    span.textContent = checkbox.checked? 'Realizada' : 'Pendiente'
+    span.textContent = checkbox.checked ? 'Realizada' : 'Pendiente'
 
 }
 
 
 function updateTasksDone() {
-    let tasksDone = document.getElementById('tasks-done')   
+    let tasksDone = document.getElementById('tasks-done')
 
-    if(tasksDone){
+    if (tasksDone) {
         tasksDone.textContent = inputInfo.getInputDone()
     }
 }
 
 function updateTasksPending() {
-    
 
-    if(taskPending)
-    {
+
+    if (taskPending) {
         taskPending.textContent = inputInfo.getInputPending()
     }
 }
@@ -734,15 +848,15 @@ function pageSelected() {
     console.log("re");
     pages = Math.round(taskList.scrollWidth / taskList.offsetWidth);
 
-    
+
     // redondea el width a un numero entero de la ventana de tareas
     let offsetWidth = Math.floor(taskList.scrollWidth / pages)
 
 
     // dot actual
     let index = Math.round(taskList.scrollLeft / offsetWidth)
-    
-    
+
+
     // se le aplican las clases al dock seleccionado
     selectDock(index)
 
@@ -755,19 +869,18 @@ function createDockPage() {
 
     let length = Math.round(taskList.scrollWidth / taskList.offsetWidth);
 
-    
+
     let fragment = document.createDocumentFragment()
-    for(let i = 0; i< length; i++) {
+    for (let i = 0; i < length; i++) {
 
         let circle = document.createElement("span")
         circle.classList.add("task-dock__circle")
 
         fragment.append(circle)
-    } 
+    }
 
-    if(taskDock)
-    {
-        while(taskDock.firstChild) {
+    if (taskDock) {
+        while (taskDock.firstChild) {
 
             taskDock.removeChild(taskDock.firstChild);
 
@@ -781,16 +894,16 @@ function createDockPage() {
 }
 
 
-function selectDock(index){
+function selectDock(index) {
 
     let docks = document.querySelectorAll('.task-dock__circle')
 
 
-    if(docks && docks.length > 0){
-        docks.forEach(function(dock){
-        
+    if (docks && docks.length > 0) {
+        docks.forEach(function (dock) {
+
             dock.classList.remove("task-dock__circle--active")
-    
+
         })
 
         docks[index].classList.add("task-dock__circle--active")
@@ -806,44 +919,42 @@ function movePageAt(e) {
     let nextIndex = -1
     let currentIndex = -1
 
-    if(e.target.classList.contains('task-dock__circle'))
-    {
+    if (e.target.classList.contains('task-dock__circle')) {
 
-        if(!e.target.classList.contains('task-dock__circle--active')){
+        if (!e.target.classList.contains('task-dock__circle--active')) {
 
             let selectedDot = e.target
             let currentDot = taskDock.querySelector(".task-dock__circle--active")
 
             let dots = [...document.querySelectorAll(".task-dock__circle")]
 
-            if(dots && dots.length>0){
-    
+            if (dots && dots.length > 0) {
+
                 nextIndex = dots.indexOf(selectedDot)
-                
+
                 currentIndex = dots.indexOf(currentDot)
 
                 let desplazamiento = -1
                 let width = taskList.offsetWidth
-                
-                if(nextIndex > currentIndex){
+
+                if (nextIndex > currentIndex) {
                     desplazamiento = nextIndex - currentIndex
 
-                    
+
 
                     taskList.scrollBy({
                         top: 0,
-                        left: width*desplazamiento,
+                        left: width * desplazamiento,
                         behavior: "smooth",
                     })
 
 
-                }else
-                {
-                    desplazamiento =  -1*(currentIndex - nextIndex)
+                } else {
+                    desplazamiento = -1 * (currentIndex - nextIndex)
 
                     taskList.scrollBy({
                         top: 0,
-                        left: width*desplazamiento,
+                        left: width * desplazamiento,
                         behavior: "smooth",
                     })
                 }
@@ -865,18 +976,18 @@ function updateOrderTasks(tasks) {
 
     console.log(tasks);
 
-    Promise.all(tasks.map( (task, index) => fetch(`/to-do/${task.dataset.id}/order`,
-    {
-        headers: {
-            "Content-Type": 'application/json'
-        },
-        method: 'PATCH',
-        body: JSON.stringify({order: index , idTask : task.dataset.id})
-    }).then(res => console.log(index))
+    Promise.all(tasks.map((task, index) => fetch(`/to-do/${task.dataset.id}/order`,
+        {
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            method: 'PATCH',
+            body: JSON.stringify({ order: index, idTask: task.dataset.id })
+        }).then(res => console.log(index))
     ))
-    .then(res => {
-        console.log("aca res");
-    })
+        .then(res => {
+            console.log("aca res");
+        })
 
 
 }

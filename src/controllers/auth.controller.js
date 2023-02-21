@@ -39,7 +39,7 @@ export const loginController = ((req, res) => {
 
                             // asignando propiedas en res.session
                             // req.session.user_data = user
-                            req.flash('info', [{ title: 'Autenticación', message: ['Usuario Validado !'], status: "success" }])
+                            req.flash('info', [{ title: 'Autenticación', message: [`Bienvenido ${user.fullname} !`], status: "success" }])
 
                             // define una propiedad en cookie llamada user
                             //    res.cookie('user', user)

@@ -17,7 +17,6 @@ input {
     width: 90%;
     min-width: 320px;
     max-width: 400px;
-    ;
     position: absolute;
     z-index: 100;
     top: 0;
@@ -49,6 +48,11 @@ input {
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
+
+        &--title
+        {
+            margin-top: -2rem;
+        }
 
         &:nth-child(2) {
             margin-top: 59px;

@@ -875,6 +875,9 @@ input::placeholder {
       -ms-flex-pack: center;
           justify-content: center;
 }
+.login-form__wrapper--title {
+  margin-top: -2rem;
+}
 .login-form__wrapper:nth-child(2) {
   margin-top: 59px;
   margin-bottom: 10px;
@@ -1018,10 +1021,18 @@ input::placeholder {
       -ms-transform: translateY(-50%) rotate(-45deg);
           transform: translateY(-50%) rotate(-45deg);
 }
+.wrapper-nav .topbar__menu__item .logo {
+  position: relative;
+  display: block;
+  height: 32px;
+  width: 90px;
+}
 .wrapper-nav .topbar__menu__item .logo img {
-  -webkit-transform: translate(-50%);
-      -ms-transform: translate(-50%);
-          transform: translate(-50%);
+  position: absolute;
+  width: 100%;
+  -webkit-transform: translate(-25%);
+      -ms-transform: translate(-25%);
+          transform: translate(-25%);
 }
 .wrapper-nav .topbar .nav {
   width: 320px;
@@ -1129,13 +1140,10 @@ input::placeholder {
   .wrapper-nav .topbar__menu__item .hamburger {
     display: none;
   }
-  .wrapper-nav .topbar__menu__item .logo {
-    margin-left: -5vw;
-  }
   .wrapper-nav .topbar__menu__item .logo img {
-    -webkit-transform: translate(0);
-        -ms-transform: translate(0);
-            transform: translate(0);
+    -webkit-transform: translate(-25%);
+        -ms-transform: translate(-25%);
+            transform: translate(-25%);
     min-width: 90px;
     width: 90px;
   }
@@ -1213,7 +1221,7 @@ input::placeholder {
     margin-right: 0;
   }
   .wrapper-nav .topbar .nav-menu__item a {
-    height: 60px;
+    height: 55px;
     font-size: 1rem;
     font-weight: bold;
     color: #EBEAEF;
@@ -1250,9 +1258,10 @@ input::placeholder {
   }
 }
 @media screen and (min-width: 1025px) {
-  .wrapper-nav .topbar__menu__item .logo {
-    margin-left: -5vw;
-    margin-left: 0;
+  .wrapper-nav .topbar__menu__item .logo img {
+    -webkit-transform: translate(0);
+        -ms-transform: translate(0);
+            transform: translate(0);
   }
   .wrapper-nav .topbar .nav-menu:first-child {
     margin-top: 0;
@@ -1356,7 +1365,7 @@ input::placeholder {
 }
 
 .login-form {
-  margin-top: 100px;
+  position: relative;
 }
 
 .user-info__label {
