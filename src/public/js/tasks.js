@@ -268,8 +268,14 @@ function toggleOptionsModal(e) {
     // toggle para abrir y cerrar opciones
     taskListOptions.classList.toggle("task-list__options__btn--hidden");
     console.log("Cambiando icon");
-    e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true);
-    e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true);
+    // e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true)
+
+    // e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true)
+
+    _toConsumableArray(taskList.querySelectorAll('[icon="fluent:options-20-filled"] ')).forEach(function (el) {
+      el.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true);
+      el.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true);
+    });
     var iconSave = e.target.closest(".task-list__options").querySelector("[icon='material-symbols:save-as']").parentElement;
     iconSave.classList.add("task-list__icon--hidden");
     var iconEdit = e.target.closest(".task-list__options").querySelector("[icon='material-symbols:edit-document']").parentElement;

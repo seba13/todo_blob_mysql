@@ -4,7 +4,7 @@ import { pool } from '../config/db.js'
 import { getUser, getUserByUsername, userExists } from '../controllers/query/users/validityUser.js';
 import { registerUser } from "./query/users/registerUser.js"
 import { encryptPassword, comparePassword } from '../utils/encrypt-password.js'
-
+import moment from 'moment-timezone';
 
 
 
@@ -34,7 +34,7 @@ export const loginController = ((req, res) => {
                         if (valid) {
 
                             req.session.userId = user.id
-
+                            request.session.last_connection = moment.tz(new Date().setHours(new Date().getHours() - 3 ), 'America/Santiago').toDate()
                             req.session.user = username
 
                             // asignando propiedas en res.session

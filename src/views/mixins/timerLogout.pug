@@ -34,12 +34,14 @@ mixin setTimer()
 
             //- console.log(tiempoRestante)
 
-            if(minutos > 0)
-                timeEl.textContent = "Sesión expira en " + minutos + " minutos y " + segundos + " segundos"
-            else
-                timeEl.textContent = "Sesión expira en " + segundos + " segundos"
 
-            if(tiempoRestante === 0) {
+            if(tiempoRestante > 0) {
+                
+                if(minutos > 0)
+                    timeEl.textContent = "Sesión expira en " + minutos + " minutos y " + segundos + " segundos"
+                else
+                    timeEl.textContent = "Sesión expira en " + segundos + " segundos"
+            }else {
                 btnLogout.click()
                 clearInterval(intervalo)
             }

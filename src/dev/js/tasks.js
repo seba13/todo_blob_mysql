@@ -358,9 +358,17 @@ function toggleOptionsModal(e) {
         taskListOptions.classList.toggle("task-list__options__btn--hidden")
 
         console.log("Cambiando icon");
-        e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true)
+        // e.target.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true)
 
-        e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true)
+        // e.target.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true)
+
+        [...taskList.querySelectorAll('[icon="fluent:options-20-filled"] ')].forEach(el => {
+            el.closest('.task-list__wrapper').firstElementChild.firstElementChild.setAttribute('readonly', true)
+
+            el.closest('.task-list__wrapper').firstElementChild.lastElementChild.setAttribute('readonly', true)
+
+        })
+
 
         let iconSave = e.target.closest(".task-list__options").querySelector("[icon='material-symbols:save-as']").parentElement
         iconSave.classList.add("task-list__icon--hidden")
