@@ -34,7 +34,7 @@ export const loginController = ((req, res) => {
                         if (valid) {
 
                             req.session.userId = user.id
-                            request.session.last_connection = moment.tz(new Date().setHours(new Date().getHours() - 3 ), 'America/Santiago').toDate()
+                            req.session.last_connection = moment.tz(new Date().setHours(new Date().getHours() - 3 ), 'America/Santiago').toDate()
                             req.session.user = username
 
                             // asignando propiedas en res.session
