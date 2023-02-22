@@ -306,7 +306,7 @@ taskDock.addEventListener("click", movePageAt)
 buttonLeft.addEventListener("click", () => {
     taskList.scrollBy({
         top: 0,
-        left: -10,
+        left: -taskList.clientWidth,
         behavior: "smooth",
     })
 })
@@ -314,7 +314,7 @@ buttonLeft.addEventListener("click", () => {
 buttonRight.addEventListener("click", () => {
     taskList.scrollBy({
         top: 0,
-        left: 10,
+        left: taskList.clientWidth,
         behavior: "smooth",
     })
 })

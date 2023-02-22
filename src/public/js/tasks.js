@@ -234,14 +234,14 @@ taskDock.addEventListener("click", movePageAt);
 buttonLeft.addEventListener("click", function () {
   taskList.scrollBy({
     top: 0,
-    left: -10,
+    left: -taskList.clientWidth,
     behavior: "smooth"
   });
 });
 buttonRight.addEventListener("click", function () {
   taskList.scrollBy({
     top: 0,
-    left: 10,
+    left: taskList.clientWidth,
     behavior: "smooth"
   });
 });

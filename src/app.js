@@ -109,6 +109,14 @@ app.use(indexRouter)
 
 // process.on('warning', e => console.warn(e.stack));
 
+
+
+app.use( (req, res, next)=> {
+    res.status(404).send("Lo siento, la página que buscas no existe.");
+})
+
+
+
 app.listen(PORT, ()=> {
     console.log("server listen on port " + PORT)
 })
