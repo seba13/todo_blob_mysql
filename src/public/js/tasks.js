@@ -25,6 +25,21 @@ var buttonNewTask = document.querySelector(".task__input-insert");
 var modalForm = buttonNewTask.querySelector('.task__form-insert');
 
 /**
+ *  agrega propiedad css overflow auto cuando un dispositivo movil 
+ *  que tiene tamaño de escritorio es touch 
+**/
+
+console.log(window);
+function setOverflowAuto() {
+  if ('ontouchstart' in window) {
+    taskList.classList.add('task-list--mobile');
+  } else {
+    taskList.classList.remove('task-list--mobile');
+  }
+}
+setOverflowAuto();
+
+/**
  *  indica la tarea que ha sido seleccionada para ordenar
  */
 var previousIndexTask = 0;
@@ -100,7 +115,7 @@ function slidePage(e) {
     }
     setTimeout(function () {
       isSliding = false;
-    }, 700);
+    }, 900);
   }
 }
 
@@ -225,6 +240,7 @@ dispatchEvent(taskDock);
 
 // seleccionar dot del dock
 window.addEventListener("resize", createDockPage);
+window.addEventListener("resize", setOverflowAuto);
 taskList.addEventListener("scroll", pageSelected);
 
 // evento scrollear al dot del dock seleccionado

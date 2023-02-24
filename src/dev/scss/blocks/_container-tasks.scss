@@ -170,6 +170,10 @@
                 overflow-X: hidden;
             }
 
+            &--mobile{
+                overflow: auto;
+            }
+
 
             &__wrapper {
                 scroll-snap-align: start;
