@@ -33,7 +33,7 @@ import {pool} from './config/db.js'
 
 
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.DEVELOP ? 5000 : process.env.PORT  || 8080
 
 
 const MySQLStorage = MySQLStore(session)

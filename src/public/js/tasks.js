@@ -100,22 +100,49 @@ function slidePage(e) {
   if (!isSliding && pressed) {
     isSliding = true;
     if (e.clientX <= coordLeft) {
-      console.log("desplzar izquierda");
+      // console.log("desplzar izquierda");
+      // taskList.scrollBy({
+      //     left: - taskList.clientWidth,
+      //     behavior: "smooth",
+      // })
+      // setTimeout(() => {
+      //     console.log("entra aca");
+      //     isSliding = false
+      // }, 1500)
+      clearInterval(intervalSlide);
       taskList.scrollBy({
         left: -taskList.clientWidth,
         behavior: "smooth"
       });
-    }
-    if (e.clientX >= coordRight) {
-      console.log("Desplzazar derecha");
+      intervalSlide = setInterval(function () {
+        taskList.scrollBy({
+          left: -taskList.clientWidth,
+          behavior: "smooth"
+        });
+      }, 1500);
+    } else if (e.clientX >= coordRight) {
+      // console.log("Desplzazar derecha");
+      // taskList.scrollBy({
+      //     left: taskList.clientWidth,
+      //     behavior: "smooth",
+      // })
+      // setTimeout(() => {
+      //     console.log("entra aca");
+      //     isSliding = false
+      // }, 1500)
+      clearInterval(intervalSlide);
       taskList.scrollBy({
         left: taskList.clientWidth,
         behavior: "smooth"
       });
+      intervalSlide = setInterval(function () {
+        taskList.scrollBy({
+          left: taskList.clientWidth,
+          behavior: "smooth"
+        });
+      }, 1500);
     }
-    setTimeout(function () {
-      isSliding = false;
-    }, 900);
+    isSliding = false;
   }
 }
 
@@ -152,8 +179,10 @@ function slidePage(e) {
 // }
 
 function endSlide(e) {
+  console.log("end slide");
   if (pressed) {
     pressed = false;
+    isSliding = false;
     clearInterval(intervalSlide);
   }
 }
