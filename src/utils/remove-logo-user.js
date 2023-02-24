@@ -1,5 +1,5 @@
 
-import {dirname, join, extname} from 'path'
+import { dirname, join, extname } from 'path'
 import { fileURLToPath } from 'url'
 import fs from 'fs'
 
@@ -15,24 +15,24 @@ const __dirname = dirname(join(__filename))
  * cuando cambia de avatar
  * @param {*} filename  
  */
-export const removeLogoUser = async(fileName, fileExtension)=>{
+export const removeLogoUser = async (fileName, fileExtension) => {
 
     const dir = join(__dirname, '../public/uploads')
 
     fs.readdir(dir, (err, files) => {
-        
+
         console.log("entra aca file");
 
         files.forEach(file => {
-            let name = file.split('.').slice(0,-1).join('')
+            let name = file.split('.').slice(0, -1).join('')
             let extension = extname(file)
 
             console.log(extension);
             console.log(fileExtension);
 
 
-            if(fileName === name && extension !== fileExtension) {
-                fs.unlink(join(dir,file), err=> {
+            if (fileName === name && extension !== fileExtension) {
+                fs.unlink(join(dir, file), err => {
                     console.log(err);
                 })
             }
@@ -42,7 +42,7 @@ export const removeLogoUser = async(fileName, fileExtension)=>{
 
 
 
-   
+
 }
 
 /**
@@ -53,33 +53,54 @@ export async function optimizeImg(filePath) {
 
     console.log(filePath);
 
-    try{
+    try {
         console.log("ENTRANDO A SHARP OPTIMIZER");
 
         const buffer = await fs.promises.readFile(filePath)
 
         let resizedImage = undefined
 
-        if(extname(filePath) === '.gif'){
-            resizedImage = await sharp(buffer, {animated: true})
-            .gif({
-                animated: true,
-                // colors: 64,
-                loop: 0,
-                lossy: false,
-                quality: 100
-            })
-            .resize({width: 150, height: 150, fit: 'cover', position: 'top'})
-            .toBuffer();
+        // cada informacion de fotograma de un gif se almacena en una pagina
+        // se almacena en metadata().pages
+        if (extname(filePath) === '.gif') {
+            resizedImage = await sharp(buffer, { animated: true })
+                .gif({
+                    animated: true,
+                    // colors: 64,
+                    loop: 0,
+                    lossy: false,
+                    quality: 100
+                })
+                .resize({ width: 150, height: 150, fit: 'cover', position: 'top' })
+                .toBuffer();
 
-        }else{
+        }
+        else {
             
-            resizedImage = await sharp(buffer, {
-                lossy: false,
-                quality: 100
-            })
-            .resize({width: 150, height: 150, fit: 'cover', position: 'top'})
-            .toBuffer();
+            // cada cuadro de la animación se almacena como una "página" separada dentro del archivo WebP
+            // si tiene mas de 1 quiere decir que es una imagen animada webp
+            if (await (await sharp(buffer).metadata()).pages > 1) {
+
+                console.log("entra en este if");
+
+                resizedImage = await sharp(buffer, { animated: true })
+                    .gif({
+                        animated: true,
+                        // colors: 64,
+                        loop: 0,
+                        lossy: false,
+                        quality: 100
+                    })
+                    .resize({ width: 150, height: 150, fit: 'cover', position: 'top' })
+                    .toBuffer();
+            }else{
+                resizedImage = await sharp(buffer, {
+                    lossy: false,
+                    quality: 100
+                })
+                    .resize({ width: 150, height: 150, fit: 'cover', position: 'top' })
+                    .toBuffer();
+            }
         }
 
 
@@ -94,16 +115,15 @@ export async function optimizeImg(filePath) {
 
         // return resizedImage
 
-    }catch(err){
+    } catch (err) {
 
-        if(err.code === 'ERR_INVALID_ARG_TYPE'){
+        if (err.code === 'ERR_INVALID_ARG_TYPE') {
 
             throw new Error('Error al encontrar ruta de imagen')
-        }else
-        {
+        } else {
             throw new Error(err)
         }
-        
+
     }
 
 
