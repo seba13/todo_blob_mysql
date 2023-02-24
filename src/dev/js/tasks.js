@@ -12,7 +12,25 @@ let buttonRight = document.getElementById("button-right")
 let buttonNewTask = document.querySelector(".task__input-insert")
 let modalForm = buttonNewTask.querySelector('.task__form-insert')
 
+/**
+ *  agrega propiedad css overflow auto cuando un dispositivo movil 
+ *  que tiene tamaño de escritorio es touch 
+**/
 
+console.log(window);
+
+function setOverflowAuto() {
+    if('ontouchstart' in window) {
+
+        taskList.classList.add('task-list--mobile')
+    
+    }else {
+        taskList.classList.remove('task-list--mobile')
+    }
+}
+
+
+setOverflowAuto()
 
 
 /**
@@ -101,23 +119,58 @@ function slidePage(e) {
         isSliding = true
 
         if (e.clientX <= coordLeft) {
-            console.log("desplzar izquierda");
+            // console.log("desplzar izquierda");
+            // taskList.scrollBy({
+            //     left: - taskList.clientWidth,
+            //     behavior: "smooth",
+            // })
+            // setTimeout(() => {
+            //     console.log("entra aca");
+            //     isSliding = false
+            // }, 1500)
+            clearInterval(intervalSlide)
             taskList.scrollBy({
                 left: - taskList.clientWidth,
                 behavior: "smooth",
             })
+
+            
+            intervalSlide = setInterval(() => {
+                taskList.scrollBy({
+                    left: - taskList.clientWidth,
+                    behavior: "smooth",
+                })
+            }, 1500);
         }
+        else 
         if (e.clientX >= coordRight) {
-            console.log("Desplzazar derecha");
+            // console.log("Desplzazar derecha");
+            // taskList.scrollBy({
+            //     left: taskList.clientWidth,
+            //     behavior: "smooth",
+            // })
+            // setTimeout(() => {
+            //     console.log("entra aca");
+            //     isSliding = false
+            // }, 1500)
+            clearInterval(intervalSlide)
+
             taskList.scrollBy({
                 left: taskList.clientWidth,
                 behavior: "smooth",
             })
-        }
 
-        setTimeout(() => {
-            isSliding = false
-        }, 700)
+
+            intervalSlide = setInterval(() => {
+                taskList.scrollBy({
+                    left: taskList.clientWidth,
+                    behavior: "smooth",
+                })
+            }, 1500);
+        }
+      
+        isSliding = false
+       
 
     }
 
@@ -163,8 +216,10 @@ function slidePage(e) {
 
 function endSlide(e) {
 
+    console.log("end slide");
     if (pressed) {
         pressed = false
+        isSliding = false
         clearInterval(intervalSlide)
     }
 
@@ -295,6 +350,7 @@ dispatchEvent(taskDock)
 
 // seleccionar dot del dock
 window.addEventListener("resize", createDockPage)
+window.addEventListener("resize", setOverflowAuto)
 taskList.addEventListener("scroll", pageSelected)
 
 
