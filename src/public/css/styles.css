@@ -1420,6 +1420,8 @@ input::placeholder {
   transition: -webkit-transform 0.25s ease;
   transition: transform 0.25s ease;
   transition: transform 0.25s ease, -webkit-transform 0.25s ease;
+  background-image: -webkit-linear-gradient(top, #383838 50%, #EBEAEF 50%);
+  background-image: linear-gradient(to bottom, #383838 50%, #EBEAEF 50%);
 }
 .user-info__label iconify-icon[icon="material-symbols:edit"] {
   padding: 0.1rem;

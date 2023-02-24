@@ -58,6 +58,7 @@
         border-radius: 50%;
         display: block;
         transition: transform .25s ease;
+        background-image: linear-gradient(to bottom, #383838 50%, #EBEAEF 50%);
     }
 
     iconify-icon[icon="material-symbols:edit"]
