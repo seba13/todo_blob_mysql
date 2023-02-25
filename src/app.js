@@ -74,7 +74,8 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         maxAge: 1*1000*60*20,
-        httpOnly: true
+        httpOnly: true,
+        secure: ! process.env.DEVELOP
         // expires: moment.tz(new Date().setSeconds(new Date().getSeconds() + 30 ), 'America/Santiago').toDate()
     }
 }))

@@ -4,3 +4,4 @@ node_modules
 /src/public/js/*
 /src/public/css/*
 .vercel
+src/controllers/query/querys-test.sql
