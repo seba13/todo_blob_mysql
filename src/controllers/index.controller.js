@@ -31,7 +31,7 @@ const renderIndex = async(request, response) => {
     console.log(moment.tz(new Date().setHours(new Date().getHours() - 3 ), 'America/Santiago').toDate());
 
     request.session.last_connection =  moment.tz(new Date().setHours(new Date().getHours() - 3 ), 'America/Santiago').toDate()
-    request.session.ipUser = request.ip
+    request.session.ipUser = ip
     request.session.country = ipData && ipData.country ? ipData.country : 'Desconocido';
     request.session.city = ipData && ipData.city ? ipData.city : 'Desconocido';
     request.session.user = "invitado"
