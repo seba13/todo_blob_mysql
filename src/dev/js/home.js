@@ -12,7 +12,9 @@ updateUserForm.addEventListener('submit', updateUser)
 
 
 
-document.body.addEventListener('load', createImg)
+// document.body.addEventListener('load', createImg)
+createImg()
+
 
 document.body.dispatchEvent(new Event('load'))
 

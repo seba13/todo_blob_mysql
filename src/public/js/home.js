@@ -11,7 +11,9 @@ var imgContainer = document.getElementById('img-container');
 var imgUser = undefined;
 updateUserForm.addEventListener('change', changeImg);
 updateUserForm.addEventListener('submit', updateUser);
-document.body.addEventListener('load', createImg);
+
+// document.body.addEventListener('load', createImg)
+createImg();
 document.body.dispatchEvent(new Event('load'));
 function createImg(_x) {
   return _createImg.apply(this, arguments);

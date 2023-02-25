@@ -66,10 +66,11 @@ var inputInfo = {
     return countPending;
   }
 };
-var treshhold = taskList.clientWidth / 3;
+var treshhold = taskList.clientWidth / 4;
 var coordsTaskList = taskList.getBoundingClientRect();
 var coordLeft = treshhold + coordsTaskList.left;
 var coordRight = coordsTaskList.right;
+var slideOrientation = "";
 var intervalSlide = null;
 var isSliding = false;
 var pressed = false;
@@ -97,9 +98,10 @@ function startSlide(e) {
   }
 }
 function slidePage(e) {
-  if (!isSliding && pressed) {
-    isSliding = true;
+  if (pressed) {
+    console.log("entra en if slidePage");
     if (e.clientX <= coordLeft) {
+      isSliding = true;
       // console.log("desplzar izquierda");
       // taskList.scrollBy({
       //     left: - taskList.clientWidth,
@@ -109,18 +111,27 @@ function slidePage(e) {
       //     console.log("entra aca");
       //     isSliding = false
       // }, 1500)
-      clearInterval(intervalSlide);
-      taskList.scrollBy({
-        left: -taskList.clientWidth,
-        behavior: "smooth"
-      });
-      intervalSlide = setInterval(function () {
-        taskList.scrollBy({
-          left: -taskList.clientWidth,
-          behavior: "smooth"
-        });
-      }, 1500);
+      if (slideOrientation !== 'LEFT') {
+        console.log("hola");
+        slideOrientation = 'LEFT';
+        clearInterval(intervalSlide);
+
+        // taskList.scrollBy({
+        //     left: - taskList.clientWidth,
+        //     behavior: "smooth",
+        // })
+
+        intervalSlide = setInterval(function () {
+          console.log("izquierda");
+          taskList.scrollBy({
+            left: -taskList.clientWidth,
+            behavior: "smooth"
+          });
+        }, 800);
+        isSliding = false;
+      }
     } else if (e.clientX >= coordRight) {
+      isSliding = true;
       // console.log("Desplzazar derecha");
       // taskList.scrollBy({
       //     left: taskList.clientWidth,
@@ -130,19 +141,33 @@ function slidePage(e) {
       //     console.log("entra aca");
       //     isSliding = false
       // }, 1500)
+
+      if (slideOrientation !== 'RIGHT') {
+        console.log("hola");
+        slideOrientation = 'RIGHT';
+        clearInterval(intervalSlide);
+
+        // taskList.scrollBy({
+        //     left: taskList.clientWidth,
+        //     behavior: "smooth",
+        // })
+
+        intervalSlide = setInterval(function () {
+          console.log("derecha");
+          taskList.scrollBy({
+            left: taskList.clientWidth,
+            behavior: "smooth"
+          });
+        }, 800);
+        isSliding = false;
+      }
+    } else {
       clearInterval(intervalSlide);
-      taskList.scrollBy({
-        left: taskList.clientWidth,
-        behavior: "smooth"
-      });
-      intervalSlide = setInterval(function () {
-        taskList.scrollBy({
-          left: taskList.clientWidth,
-          behavior: "smooth"
-        });
-      }, 1500);
+      slideOrientation = '';
     }
-    isSliding = false;
+
+    // isSliding = false
+    // slideOrientation = ''
   }
 }
 
@@ -183,6 +208,7 @@ function endSlide(e) {
   if (pressed) {
     pressed = false;
     isSliding = false;
+    slideOrientation = '';
     clearInterval(intervalSlide);
   }
 }
