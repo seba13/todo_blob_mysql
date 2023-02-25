@@ -1,5 +1,6 @@
 node_modules
 .env
+/src/controllers/query/querys-test.sql
 /src/public/js/*
 /src/public/css/*
 .vercel
