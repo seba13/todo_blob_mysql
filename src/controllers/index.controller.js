@@ -17,8 +17,8 @@ const renderIndex = async(request, response) => {
 
     // console.log(userId);
 
-   let ip = request.headers['x-forwarded-for'] || request.socket.remoteAddress
-
+    let ip = request.headers['x-forwarded-for'] || request.socket.remoteAddress
+    console.log(ip);
     ip = ip.replace('::ffff:','')
 
     const ipinfo = new IPinfoWrapper(process.env.GEO_TOKEN, null, 10000);
