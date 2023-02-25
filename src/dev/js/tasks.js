@@ -69,11 +69,11 @@ let inputInfo = {
 }
 
 
-let treshhold = taskList.clientWidth / 3
+let treshhold = taskList.clientWidth / 4
 let coordsTaskList = taskList.getBoundingClientRect()
 let coordLeft = treshhold + coordsTaskList.left
 let coordRight = coordsTaskList.right
-
+let slideOrientation = ""
 let intervalSlide = null
 let isSliding = false
 let pressed = false
@@ -114,11 +114,12 @@ function startSlide(e) {
 
 function slidePage(e) {
 
-    if (!isSliding && pressed) {
-
-        isSliding = true
+    if (pressed) {
+        console.log("entra en if slidePage");
+        
 
         if (e.clientX <= coordLeft) {
+            isSliding = true
             // console.log("desplzar izquierda");
             // taskList.scrollBy({
             //     left: - taskList.clientWidth,
@@ -128,22 +129,34 @@ function slidePage(e) {
             //     console.log("entra aca");
             //     isSliding = false
             // }, 1500)
-            clearInterval(intervalSlide)
-            taskList.scrollBy({
-                left: - taskList.clientWidth,
-                behavior: "smooth",
-            })
+            if(slideOrientation !== 'LEFT'){
 
+                console.log("hola");
+
+                slideOrientation = 'LEFT'
+                clearInterval(intervalSlide)
+
+                // taskList.scrollBy({
+                //     left: - taskList.clientWidth,
+                //     behavior: "smooth",
+                // })
+                
+                intervalSlide = setInterval(() => {
+
+                    console.log("izquierda");
+                    taskList.scrollBy({
+                        left: - taskList.clientWidth,
+                        behavior: "smooth",
+                    })
+                    
+                }, 800);
+                isSliding = false
+            }
             
-            intervalSlide = setInterval(() => {
-                taskList.scrollBy({
-                    left: - taskList.clientWidth,
-                    behavior: "smooth",
-                })
-            }, 1500);
         }
         else 
         if (e.clientX >= coordRight) {
+            isSliding = true
             // console.log("Desplzazar derecha");
             // taskList.scrollBy({
             //     left: taskList.clientWidth,
@@ -153,24 +166,41 @@ function slidePage(e) {
             //     console.log("entra aca");
             //     isSliding = false
             // }, 1500)
+
+        
+
+            if(slideOrientation !== 'RIGHT') {
+                console.log("hola");
+                slideOrientation = 'RIGHT'
+                clearInterval(intervalSlide)
+
+                // taskList.scrollBy({
+                //     left: taskList.clientWidth,
+                //     behavior: "smooth",
+                // })
+    
+    
+                intervalSlide = setInterval(() => {
+
+                    console.log("derecha");
+
+                    taskList.scrollBy({
+                        left: taskList.clientWidth,
+                        behavior: "smooth",
+                    })
+                  
+                }, 800);
+
+                isSliding = false
+            }
+           
+        }else {
             clearInterval(intervalSlide)
-
-            taskList.scrollBy({
-                left: taskList.clientWidth,
-                behavior: "smooth",
-            })
-
-
-            intervalSlide = setInterval(() => {
-                taskList.scrollBy({
-                    left: taskList.clientWidth,
-                    behavior: "smooth",
-                })
-            }, 1500);
+            slideOrientation = ''
         }
       
-        isSliding = false
-       
+        // isSliding = false
+        // slideOrientation = ''
 
     }
 
@@ -220,6 +250,7 @@ function endSlide(e) {
     if (pressed) {
         pressed = false
         isSliding = false
+        slideOrientation = ''
         clearInterval(intervalSlide)
     }
 
