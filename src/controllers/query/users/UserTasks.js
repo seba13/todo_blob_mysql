@@ -18,6 +18,9 @@ export const saveTask = async ({idUser, nombre, descripcion}) => {
 
     // task = {titulo, descripcion}
 
+    console.log(idUser, nombre, descripcion);
+
+
     const [rows, fields] = await pool.query('Insert into tasks(id_user,nombre, descripcion) values (?,?,?)',[idUser,nombre, descripcion])
 
 

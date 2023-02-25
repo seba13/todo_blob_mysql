@@ -428,11 +428,19 @@ function addNewTask(e) {
     method: "POST",
     body: JSON.stringify(data)
   }).then(function (res) {
-    if (res.ok) return res.json();else throw new Error('Error al agregar Tarea');
+    return res.json();
+    // lese throw new Error('Error al agregar Tarea:');
   }).then(function (json) {
-    updateTasksList(_objectSpread({
-      op: 'append'
-    }, json));
+    console.log(json);
+    if (!json.error) {
+      updateTasksList(_objectSpread({
+        op: 'append'
+      }, json));
+    } else {
+      // console.log("entra en else ");
+      console.error(json.errorMessage);
+      throw new Error(json.message);
+    }
   })["catch"](function (err) {
     createModalMessage({
       flag: false,

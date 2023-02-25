@@ -8,4 +8,4 @@ CREATE TRIGGER default_order_task before INSERT ON tasks
 		begin 
         SET new.order_task = (select count(*) + 1 from tasks where deleted=0);
 end $
-    
+

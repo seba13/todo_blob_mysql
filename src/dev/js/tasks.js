@@ -610,14 +610,25 @@ function addNewTask(e) {
     })
         .then(res => {
 
-            if (res.ok) return res.json()
-            else throw new Error('Error al agregar Tarea');
+            return res.json()
+            // lese throw new Error('Error al agregar Tarea:');
         })
         .then(json => {
 
-            updateTasksList({ op: 'append', ...json })
+            console.log(json);
+
+            if(!json.error){
+                updateTasksList({ op: 'append', ...json })
+            }
+            else{
+
+                // console.log("entra en else ");
+                console.error(json.errorMessage);
+                throw new Error(json.message);
+            }
+               
         })
-        .catch(err => {
+        .catch((err) => {
             createModalMessage({ flag: false, title: "Nueva Tarea", message: err.message })
         })
 
