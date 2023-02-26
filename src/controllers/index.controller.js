@@ -17,9 +17,11 @@ const renderIndex = async(request, response) => {
 
     // console.log(userId);
 
+    console.log("ip server:"+request.connection.localAddress.replace('::ffff:',''));
+
     let ip = request.headers['x-forwarded-for'] || request.socket.remoteAddress
-    console.log(ip);
     ip = ip.replace('::ffff:','')
+    console.log("ip client:"+ip);
 
     const ipinfo = new IPinfoWrapper(process.env.GEO_TOKEN, null, 10000);
 
