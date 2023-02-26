@@ -1885,7 +1885,7 @@ input::placeholder {
   cursor: pointer;
 }
 .container-tasks .task__wrapper .task-dock .task-dock__circle--active {
-  width: 40px;
+  width: 30px;
   background-color: #ff5400;
 }
 .container-tasks .task__wrapper .task-info {
