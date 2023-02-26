@@ -19,6 +19,11 @@ export const removeLogoUser = async (fileName, fileExtension) => {
 
     const dir = join(__dirname, '../public/uploads')
 
+    if(!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+    }
+
+
     fs.readdir(dir, (err, files) => {
 
         console.log("entra aca file");
