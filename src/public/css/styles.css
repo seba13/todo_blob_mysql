@@ -1875,21 +1875,17 @@ input::placeholder {
   width: 10px;
   height: 10px;
   background-color: #fff;
-  border-radius: 50%;
+  border-radius: 10px;
   margin: 5px;
   -webkit-transform: scale(1);
       -ms-transform: scale(1);
           transform: scale(1);
-  -webkit-transition: -webkit-transform 0.3s ease;
-  transition: -webkit-transform 0.3s ease;
-  transition: transform 0.3s ease;
-  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+  -webkit-transition: background-color 0.25s ease, width 0.25s ease;
+  transition: background-color 0.25s ease, width 0.25s ease;
   cursor: pointer;
 }
 .container-tasks .task__wrapper .task-dock .task-dock__circle--active {
-  -webkit-transform: scale(1.5);
-      -ms-transform: scale(1.5);
-          transform: scale(1.5);
+  width: 40px;
   background-color: #ff5400;
 }
 .container-tasks .task__wrapper .task-info {

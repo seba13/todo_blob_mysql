@@ -407,13 +407,14 @@
                 width: 10px;
                 height: 10px;
                 background-color: #fff;
-                border-radius: 50%;
+                border-radius: 10px;
                 margin: 5px;
                 transform: scale(1);
-                transition: transform .3s ease;
+                transition: background-color .25s ease, width .25s ease;
                 cursor: pointer;
                 &--active {
-                    transform: scale(1.5);
+                    width: 40px;
+                    // transform: scale(1.5);
                     background-color: #ff5400;
                 }
             }
