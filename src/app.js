@@ -39,9 +39,11 @@ const PORT = process.env.DEVELOP === true ? 5000 : process.env.PORT  || 8080
 const MySQLStorage = MySQLStore(session)
 export const sessionStore = new MySQLStorage({...options, createDatabaseTable: true}, pool)
 
-// create express application
+// Cuando ejecute una aplicación Express detrás de un proxy, establezca (utilizando app.set()) la variable de aplicación trust proxy en uno de los valores de la siguiente tabla.
 const app = express();
 
+// confiar 
+app.set("trust proxy", true);
 
 // motor engine
 app.set('views',join(__dirname, '/views/pages/'))
