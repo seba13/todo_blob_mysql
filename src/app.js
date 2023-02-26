@@ -65,6 +65,8 @@ app.use(express.urlencoded({ extended: true }))
 // la zona horario en Chile gmt -3 
 // date.setHours(date.getHours() + 2)
 
+console.log(process.env.DEVELOP=== "false");
+
 
 app.use(session({
     name: 'test-express-session',
@@ -73,9 +75,9 @@ app.use(session({
     store: sessionStore,
     saveUninitialized: false,
     cookie: {
+        secure: process.env.DEVELOP === "false",
         maxAge: 1*1000*60*20,
         httpOnly: true,
-        secure: ! process.env.DEVELOP
         // expires: moment.tz(new Date().setSeconds(new Date().getSeconds() + 30 ), 'America/Santiago').toDate()
     }
 }))
