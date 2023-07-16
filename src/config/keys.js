@@ -6,30 +6,24 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 dotenv.config({ path: join(__dirname, "./../../.env") });
 
-if (process.env.DEVELOP === "true") {
-}
+let host = "";
+if (!process.env.DEVELOP || process.env.DEVELOP !== "true") {
+
+  host = "_ALWAYSDATA";
+
+  console.log(process.env[`MYSQL_HOST${host}`]);
+  console.log(process.env[`DB_NAME${host}`]);
+  console.log(process.env[`MYSQL_USER${host}`]);
+  console.log(process.env[`MYSQL_PASSWORD${host}`]);
+  console.log(process.env[`MYSQL_PORT${host}`]);
+} 
 
 const options = {
-  host:
-    process.env.DEVELOP === "true"
-      ? process.env.MYSQL_HOST
-      : process.env.MYSQL_HOST_RAILWAY,
-  database:
-    process.env.DEVELOP === "true"
-      ? process.env.DB_NAME
-      : process.env.DB_NAME_RAILWAY,
-  user:
-    process.env.DEVELOP === "true"
-      ? process.env.MYSQL_USER
-      : process.env.MYSQL_USER_RAILWAY,
-  password:
-    process.env.DEVELOP === "true"
-      ? process.env.MYSQL_PASSWORD
-      : process.env.MYSQL_PASSWORD_RAILWAY,
-  port:
-    process.env.DEVELOP === "true"
-      ? process.env.DB_PORT
-      : process.env.MYSQL_PORT_RAILWAY,
+  host: process.env[`MYSQL_HOST${host}`],
+  database: process.env[`DB_NAME${host}`],
+  user: process.env[`MYSQL_USER${host}`],
+  password: process.env[`MYSQL_PASSWORD${host}`],
+  port: process.env[`MYSQL_PORT${host}`],
   waitForConnections: true,
   connectionLimit: 200,
   queueLimit: 0,

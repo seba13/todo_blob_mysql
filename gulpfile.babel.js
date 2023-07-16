@@ -69,7 +69,7 @@ function watchTasks() {
     server.init({
         // proxy: '192.168.0.10:5000',
         // port: 80
-        proxy: '192.168.0.10:'+ (process.env.DEVELOP=== "true" ? '5000' : process.env.PORT),
+        proxy: '192.168.0.11:'+ (process.env.DEVELOP=== "true" ? '5000' : process.env.PORT),
         port: process.env.DEVELOP=== "true" ? process.env.PORT : 5000 
     })
     gulp.watch("./src/views/**/*.pug", undefined).on('change', server.reload)
