@@ -11,11 +11,11 @@ if (!process.env.DEVELOP || process.env.DEVELOP !== "true") {
 
   host = "_ALWAYSDATA";
 
-  console.log(process.env[`MYSQL_HOST${host}`]);
-  console.log(process.env[`DB_NAME${host}`]);
-  console.log(process.env[`MYSQL_USER${host}`]);
-  console.log(process.env[`MYSQL_PASSWORD${host}`]);
-  console.log(process.env[`MYSQL_PORT${host}`]);
+  // console.log(process.env[`MYSQL_HOST${host}`]);
+  // console.log(process.env[`DB_NAME${host}`]);
+  // console.log(process.env[`MYSQL_USER${host}`]);
+  // console.log(process.env[`MYSQL_PASSWORD${host}`]);
+  // console.log(process.env[`MYSQL_PORT${host}`]);
 } 
 
 const options = {
